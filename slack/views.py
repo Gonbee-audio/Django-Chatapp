@@ -11,13 +11,14 @@ from django.views.generic import DeleteView
 def SingUpAccount(request):
     if request.method == "POST":
         username1 = request.POST['username']
+        username2 = request.POST['username']
         password1 = request.POST['password']
         try:
             User.objects.get(username=username1)
             return render(request, 'SignUp.html', {'error':'This username is already in use'})
         except:
-            User.objects.create_user(username1, '', password1)
-            return render(request, 'Signup.html', {'success':'You success your new account!!'})
+            User.objects.create(username=username1, nickname=username1, password=password1)
+            return render(request, 'Signup.html', {'success':'Account created successfully'})
     return render(request, 'SignUp.html', {})
 
 
