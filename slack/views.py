@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from accounts.models import User
-from slack.models import ChatMessage
+from slack.models import ChatMessage, Comments
 from slack.forms import PostChatMessage
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -71,19 +71,21 @@ def Good(request,pk):
     post.save()
     return redirect('chat')
 
-#def ChangeYourAccount(request,pk):
-#    if request.method == 'POST':
-#            User.objects.get(pk=pk)
-#            form = PostChatMessage(request.POST, request.FILES)
-#            if form.is_valid():
-#                form.save()
-#                return redirect('chat')
-#        except:
-#            return redirect('chat')
-##        return redirect('chat')
-
 class ChangeYourAccount(UpdateView):
     model = User
     fields = ('nickname', 'image', 'email')
     template_name = 'base.html'
     success_url = reverse_lazy('chat')
+
+def CommentsSend(request, pk):
+    object = ChatMessage.objects.get(pk=pk)
+    return render(request, 'Comments.html', {'object':object}) 
+
+
+#def ChatComment(request, pk):
+#    form = Comments()
+#    if request.method == 'POST':
+#        form = Comments(request.POST, request.FILES)
+#        return render(request, 'Comments.html', {'pk':pk})
+#    else:
+#       return ridirect('comment')

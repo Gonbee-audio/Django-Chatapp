@@ -25,7 +25,10 @@
         {% if item.image %}<p class="text-center"><img src='{{item.image.url}}' width="200" height="200"/></p>{% endif %}
         <div>
             <a href="{% url 'good' item.pk %}" class="btn btn-info btn" role="button" aria-pressed="true">
-                Good！{{ item.good }}
+                Good！{{ item.good }} 
+            </a>
+            <a>
+                {{ item.created_date }}
             </a>
             {% if user.is_authenticated %}
                 {% if user.nickname == item.username %}
@@ -39,6 +42,7 @@
                 <templates>
                 {% endif %}
             {% endif %}
+            <a class="btn btn-secondary" href="{% url 'comment' item.pk %}">Detail</a>
             <img src='{{ user.image.url }}' width="50" height="50"/>
         </div>    
     </div>

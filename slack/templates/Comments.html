@@ -1,0 +1,35 @@
+{% extends "Base.html" %}
+
+{% load static %}  
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'SlackCss/Login.css' %}">
+<style>
+    body{
+        background-color: #f5f5f5;
+    }
+
+    .ChatBar{
+        border: 1px solid black;
+        padding: 1% 5%;
+        margin: 2% 20%;
+        background-color: aquamarine;
+    }
+</style>
+{% endblock %}
+
+{% block content%}
+<body>
+    <div class="ChatBar">
+        <a>Name:{{ object.username }}</a>
+        <a>Comments:{{ object.text }}</a>
+        {% if object.image %}
+            <p class="text-center"><img src='{{ object.image.url }}' width="400" height="400"/></p>
+        {% endif %}
+        <div>
+    </div>
+</body>
+{% endblock %}
+
+{% block links %}
+{% endblock %}
