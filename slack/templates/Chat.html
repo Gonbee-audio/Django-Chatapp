@@ -17,7 +17,7 @@
                 Good！{{ item.good }}
             </a>
             {% if user.is_authenticated %}
-                {% if user.username == item.username %}
+                {% if user.nickname == item.username %}
                 <templates id="delete-animate">
                     <transition
                                name="custom-classes-transition"

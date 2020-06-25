@@ -5,7 +5,8 @@ from slack.forms import PostChatMessage
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from django.views.generic import DeleteView
+from django.views.generic import DeleteView, UpdateView
+from django.urls import reverse_lazy
 # Create your views here.
 
 def SingUpAccount(request):
@@ -70,10 +71,19 @@ def Good(request,pk):
     post.save()
     return redirect('chat')
 
-def LoginUser(request):
-    username = None
-    if request.user.is_authenticated():
-       username = request.user
-       context = {'username': username}
-       return render(request ,'base.html', context)
+#def ChangeYourAccount(request,pk):
+#    if request.method == 'POST':
+#            User.objects.get(pk=pk)
+#            form = PostChatMessage(request.POST, request.FILES)
+#            if form.is_valid():
+#                form.save()
+#                return redirect('chat')
+#        except:
+#            return redirect('chat')
+##        return redirect('chat')
 
+class ChangeYourAccount(UpdateView):
+    model = User
+    fields = ('nickname', 'image', 'email')
+    template_name = 'base.html'
+    success_url = reverse_lazy('chat')
