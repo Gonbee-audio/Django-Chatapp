@@ -20,15 +20,15 @@
 
 {% block content %}
     {% for item in object %}
-
+    
     <div class="ChatBar">{{ item.text }} <br> name:{{ item.username }}
+        <a>
+            {{ item.created_date|date:"n/j H:i:s" }}
+        </a>
         {% if item.image %}<p class="text-center"><img src='{{item.image.url}}' width="200" height="200"/></p>{% endif %}
         <div>
             <a href="{% url 'good' item.pk %}" class="btn btn-info btn" role="button" aria-pressed="true">
                 Good！{{ item.good }} 
-            </a>
-            <a>
-                {{ item.created_date }}
             </a>
             {% if user.is_authenticated %}
                 {% if user.nickname == item.username %}

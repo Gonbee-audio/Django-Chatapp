@@ -1,6 +1,5 @@
 from django.urls import path
-from slack.views import SingUpAccount, Login, ChatModel, SendChatMessage, Logout, DeleteView, Good, ChangeYourAccount, CommentsSend
-""", ChatComment"""
+from slack.views import SingUpAccount, Login, ChatModel, SendChatMessage, Logout, DeleteView, Good, ChangeYourAccount, CommentsSend, ChatComment
 
 urlpatterns = [
     path('SignUp/', SingUpAccount, name="signup"),
@@ -12,5 +11,5 @@ urlpatterns = [
     path('Chat/<int:pk>/Good', Good, name="good"),
     path('settings/<int:pk>/account/', ChangeYourAccount.as_view(), name="change"),
     path('Comments/<int:pk>', CommentsSend, name="comment"),
-  # path('Comments/<slug:object_pk>/ChatComment', ChatComment, name="chatcomment")
+    path('Comments/<slug:object_pk>/ChatComment', ChatComment, name="chatcomment")
 ]

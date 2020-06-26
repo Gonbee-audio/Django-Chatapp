@@ -8,6 +8,7 @@ from django.contrib.auth import logout
 from django.views.generic import DeleteView, UpdateView
 from django.urls import reverse_lazy
 from django.contrib.auth.hashers import make_password
+from django.utils import timezone
 # Create your views here.
 
 def SingUpAccount(request):
@@ -52,7 +53,7 @@ def SendChatMessage(request):
 
 @login_required
 def ChatModel(request):
-    object = ChatMessage.objects.all()
+    object = ChatMessage.objects.order_by('created_date')
     return render(request, 'Chat.html', {'object':object}) 
 
 def Logout(request):
@@ -83,7 +84,7 @@ def CommentsSend(request, pk):
     detail = ChatMessage.objects.get(pk=pk)
     return render(request, 'Comments.html', {'detail':detail}) 
 
-"""
+
 def ChatComment(request, object_pk):
     post = get_object_or_404(ChatMessage, pk=object_pk)
     if request.method == 'POST':
@@ -94,4 +95,3 @@ def ChatComment(request, object_pk):
         return redirect('comment', post.pk)
     else:
        return redirect('comment', post.pk)
-"""
