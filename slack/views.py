@@ -82,10 +82,10 @@ def CommentsSend(request, pk):
     return render(request, 'Comments.html', {'object':object}) 
 
 
-#def ChatComment(request, pk):
-#    form = Comments()
-#    if request.method == 'POST':
-#        form = Comments(request.POST, request.FILES)
-#        return render(request, 'Comments.html', {'pk':pk})
-#    else:
-#       return ridirect('comment')
+def ChatComment(request, pk):
+    form = Comments()
+    if request.method == 'POST':
+        form = Comments(request.POST, request.FILES)
+        return render(request, 'Comments.html', {'pk':pk})
+    else:
+       return ridirect('comment')
