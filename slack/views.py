@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from accounts.models import User
 from slack.models import ChatMessage, Comments
 from slack.forms import PostChatMessage
@@ -7,18 +7,20 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.views.generic import DeleteView, UpdateView
 from django.urls import reverse_lazy
+from django.contrib.auth.hashers import make_password
 # Create your views here.
 
 def SingUpAccount(request):
     if request.method == "POST":
         username1 = request.POST['username']
         username2 = request.POST['username']
-        password1 = request.POST['password']
+        nonhashpassword = request.POST['password']
+        password1 = make_password(nonhashpassword)
         try:
             User.objects.get(username=username1)
             return render(request, 'SignUp.html', {'error':'This username is already in use'})
         except:
-            User.objects.create(username=username1, nickname=username1, password=password1)
+            User.objects.create(username=username1, nickname=username2, password=password1)
             return render(request, 'Signup.html', {'success':'Account created successfully'})
     return render(request, 'SignUp.html', {})
 
@@ -78,14 +80,18 @@ class ChangeYourAccount(UpdateView):
     success_url = reverse_lazy('chat')
 
 def CommentsSend(request, pk):
-    object = ChatMessage.objects.get(pk=pk)
-    return render(request, 'Comments.html', {'object':object}) 
+    detail = ChatMessage.objects.get(pk=pk)
+    return render(request, 'Comments.html', {'detail':detail}) 
 
-
-def ChatComment(request, pk):
-    form = Comments()
+"""
+def ChatComment(request, object_pk):
+    post = get_object_or_404(ChatMessage, pk=object_pk)
     if request.method == 'POST':
-        form = Comments(request.POST, request.FILES)
-        return render(request, 'Comments.html', {'pk':pk})
+        userform = Comments(request.POST)
+        new_blog = userform.save(commit=False)
+        new_blog.user = CustomUser.objects.get(id=request.chatsend.id)
+        new_blog.save()
+        return redirect('comment', post.pk)
     else:
-       return ridirect('comment')
+       return redirect('comment', post.pk)
+"""

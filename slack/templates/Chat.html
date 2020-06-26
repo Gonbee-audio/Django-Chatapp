@@ -43,7 +43,9 @@
                 {% endif %}
             {% endif %}
             <a class="btn btn-secondary" href="{% url 'comment' item.pk %}">Detail</a>
+            {% if user.image %}
             <img src='{{ user.image.url }}' width="50" height="50"/>
+            {% endif %}
         </div>    
     </div>
 

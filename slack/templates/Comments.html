@@ -21,21 +21,16 @@
 {% block content%}
 <body>
     <div class="ChatBar">
-    {{ object.pk }}
-        <a>Name:{{ object.username }}</a>
-        <a>Comments:{{ object.text }}</a>
+    {{ object.id }}
+        <a>Name:{{ detail.username }}</a>
+        <a>Comments:{{ detail.text }}</a>
         {% if object.image %}
             <p class="text-center"><img src='{{ object.image.url }}' width="400" height="400"/></p>
         {% endif %}
-        <div>
-        <form method="POST" enctype="multipart/form-data">{% csrf_token %}
-                    <input type="hidden" name="username" value="{{ user.nickname }}">
-                    <textarea name="text" cols="10" rows="10"></textarea><br>
-                    <p>picture: <input type="file" name="image"></p>
-                    <input type="button" value="coution" class="alert alert-light" role="alert" @click="ChangePagenation">
-                    <input type="submit" value="Send">
-        </form>
-    </div>
+       
+       
+       
+       
 </body>
 {% endblock %}
 

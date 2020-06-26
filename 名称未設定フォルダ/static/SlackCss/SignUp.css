@@ -1,0 +1,14 @@
+body{
+    background-color: #f5f5f5;
+}
+.SignUpMenu{
+    border: 1px double black;
+    border-radius: 10%;
+    padding: 20% 10%;
+    margin: 0 20%;
+    background-color: #ffffff;
+}
+.TypoBox{
+    text-align: justify;
+    padding: 2% 1%;
+}
