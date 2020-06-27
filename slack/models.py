@@ -18,12 +18,11 @@ class ChatMessage(models.Model):
         return self.username
 
 class Comments(models.Model):
-    chatmessage = models.ForeignKey(ChatMessage,  on_delete=models.CASCADE, related_name='comments')
+    chatmessage = models.ForeignKey(ChatMessage, on_delete=models.CASCADE, related_name='items')
     username = models.CharField(max_length=30)
     text = models.CharField(max_length=1000)
     icon =models.ImageField(upload_to='images',blank=True, null=True)
-    chatlog = models.IntegerField(null=True, blank=False, default=0)
     
     def __str__(self):
-        return str(self.chatmessage_id)
+        return self.text
 

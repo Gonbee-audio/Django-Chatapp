@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from accounts.models import User
 from slack.models import ChatMessage, Comments
-from slack.forms import PostChatMessage
+from slack.forms import PostChatMessage, CommentForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
@@ -9,6 +9,7 @@ from django.views.generic import DeleteView, UpdateView
 from django.urls import reverse_lazy
 from django.contrib.auth.hashers import make_password
 from django.utils import timezone
+import logging
 # Create your views here.
 
 def SingUpAccount(request):
@@ -82,16 +83,20 @@ class ChangeYourAccount(UpdateView):
 
 def CommentsSend(request, pk):
     detail = ChatMessage.objects.get(pk=pk)
-    return render(request, 'Comments.html', {'detail':detail}) 
-
+    posts = Comments.objects.all()
+    logging.debug(posts)
+    return render(request, 'Comments.html', {'detail':detail, 'posts':posts}) 
 
 def ChatComment(request, object_pk):
     post = get_object_or_404(ChatMessage, pk=object_pk)
+    logging.debug(post)
     if request.method == 'POST':
-        userform = Comments(request.POST)
-        new_blog = userform.save(commit=False)
-        new_blog.user = CustomUser.objects.get(id=request.chatsend.id)
-        new_blog.save()
+        userform = CommentForm(request.POST)
+        comment = userform.save(commit=False)
+        comment.chatmessage = post
+        comment.save()   
+
         return redirect('comment', post.pk)
     else:
        return redirect('comment', post.pk)
+    return redirect('comment')

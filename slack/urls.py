@@ -11,5 +11,5 @@ urlpatterns = [
     path('Chat/<int:pk>/Good', Good, name="good"),
     path('settings/<int:pk>/account/', ChangeYourAccount.as_view(), name="change"),
     path('Comments/<int:pk>', CommentsSend, name="comment"),
-    path('Comments/<slug:object_pk>/ChatComment', ChatComment, name="chatcomment")
+    path('Comments/<int:object_pk>/ChatComment', ChatComment, name="chatcomment")
 ]

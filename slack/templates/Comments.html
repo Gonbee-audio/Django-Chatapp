@@ -27,10 +27,27 @@
         {% if object.image %}
             <p class="text-center"><img src='{{ object.image.url }}' width="400" height="400"/></p>
         {% endif %}
-       
-       
-       
-       
+       <form method="POST" action="{% url 'chatcomment' detail.pk %}" enctype="multipart/form-data">{% csrf_token %}
+                    <input type="hidden" name="username" value="{{ user.nickname }}">
+                    <textarea name="text" cols="10" rows="10"></textarea><br>
+                    <p>picture: <input type="file" name="icon"></p>
+                <input type="submit" value="Send">
+        </form>
+
+{% for post in posts %}
+{% for comment in post.chatmessage.items.all %}
+    <div class="comment">
+    {% if post.chatmessage.pk == detail.pk %}
+        <strong>{{ comment.username }}</strong>
+        <p>{{ comment.text|linebreaks }}</p>
+        <p>{{ comment.icon }}</p>
+    {% endif %}
+    </div>
+{% empty %}
+    <p>No comments here yet :(</p>
+{% endfor %}
+{% endfor %}
+
 </body>
 {% endblock %}
 
