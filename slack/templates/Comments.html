@@ -29,16 +29,14 @@
         {% endif %}
        <form method="POST" action="{% url 'chatcomment' detail.pk %}" enctype="multipart/form-data">{% csrf_token %}
                     <input type="hidden" name="username" value="{{ user.nickname }}">
-                    <textarea name="text" cols="10" rows="10"></textarea><br>
+                    <textarea name="text" cols="90" rows="10"></textarea><br>
                     <p>picture: <input type="file" name="icon"></p>
                 <input type="submit" value="Send">
         </form>
 
-
-{{post}}
 {% for comment in detail.items.all %}
     <div class="comment">
-        <strong>{{ comment.items.username }}</strong>
+        <strong>Name:{{ comment.items.username }}</strong>
         <p>{{ comment.text|linebreaks }}</p>
         <p>{{ comment.icon }}</p>
     </div>

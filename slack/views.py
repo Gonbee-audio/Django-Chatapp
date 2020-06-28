@@ -45,12 +45,9 @@ def SendChatMessage(request):
     if request.method == 'POST':
        form = PostChatMessage(request.POST, request.FILES)
        if form.is_valid():
-           post = form.save(commit=False)
-           post.nickname = request.user
-           post.save()
+           form.save()
            return redirect('chat')
-       else:
-           form = PostChatMessage()
+    else:
            return render(request, 'ChatSend.html', {'error': 'Please type message'})
     return render(request, 'ChatSend.html', {'form':form})
 
@@ -90,7 +87,7 @@ def CommentsSend(request, object_pk):
 def ChatComment(request, object_pk):
     post = get_object_or_404(ChatMessage, pk=object_pk)
     if request.method == 'POST':
-        userform = CommentForm(request.POST)
+        userform = CommentForm(request.POST, request.FILES)
         comment = userform.save(commit=False)
         comment.chatmessage = post
         comment.save()   
