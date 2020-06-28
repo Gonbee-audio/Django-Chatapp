@@ -28,7 +28,7 @@
         <form method="POST" action="" >{% csrf_token %}
         <div class="SignUpMenu">
         {% if error %}{{ error }}{% endif %}
-        <a href="../Login">Login Page</a>
+        <a href="../">Login Page</a>
         <h3>{% if success %}{{ success }}<a href="../Login">Login Page</a>{% endif %}</h3>
         <div class="TypoBox">
             <a>name:　　　　</a><input type="text" name="username" placeholder="username">

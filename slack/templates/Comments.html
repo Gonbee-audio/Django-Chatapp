@@ -22,8 +22,8 @@
 <body>
     <div class="ChatBar">
     {{ object.id }}
-        <a>Name:{{ detail.username }}</a>
-        <a>Comments:{{ detail.text }}</a>
+        <div>Name:{{ detail.username }}</div>
+        <div>Comments:{{ detail.text }}</div>
         {% if object.image %}
             <p class="text-center"><img src='{{ object.image.url }}' width="400" height="400"/></p>
         {% endif %}
@@ -36,12 +36,10 @@
 
 {% for comment in detail.items.all %}
     <div class="comment">
-        <strong>Name:{{ comment.items.username }}</strong>
+        <strong>Name:{{ comment.username }}</strong>
         <p>{{ comment.text|linebreaks }}</p>
         <img src='{{ comment.icon }}' width="50" height="50"/>
     </div>
-{% empty %}
-    <p>No comments here yet :(</p>
 {% endfor %}
 
 

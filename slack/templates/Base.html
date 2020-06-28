@@ -41,11 +41,14 @@
               position: absolute;
               
             }
-            .ChatPage{
+            
+            .ProfilePage{
+              background-color: #d1a046;
               position: fixed;
-              z-index: 1; 
-              top: 90%;
-              left: 60%
+              top: 0%;
+              left: 70%;
+              height: 100%;
+              width: 30%;
             }
         </style>
 
@@ -59,9 +62,7 @@
                 <transition name="custom-classes-transition"
                             enter-active-class="animated slideInLeft"
                             leave-active-class="animated slideOutLeft">
-                    <div key="hidden" v-if="MenuPage" >
-                        
-                    </div>
+                    <div key="hidden" v-if="MenuPage" ></div>
                     <div key="show"v-else class="MenuCatalog">
                         <div class="IconPosition">
                             <div class="list-group">
@@ -71,9 +72,9 @@
                                 {% endif %}
                                 <p>{{ user.username }}でログイン中</p>
                                 <a class="list-group-item list-group-item-action active" @click="OpenMenupage">Back</a>
-                                <a @click="OpenChatPage" class="list-group-item list-group-item-action">ChatBar</a>
+                                <a @click="OpenProfile" class="list-group-item list-group-item-action">Profile</a>
                                 <a @click="OpenOptionPage" class="list-group-item list-group-item-action">Option</a>
-                                <a href="../Chat" class="list-group-item list-group-item-action">ChatRoom</a>
+                                <a href="../" class="list-group-item list-group-item-action">ChatRoom</a>
                                 <a href="../ChatSend/" class="list-group-item list-group-item-action">ChatBox</a>
                                 <a href="{% url 'logout' %}" class="list-group-item list-group-item-action">Logout</a>
                                 <a>{{ username }}</a>
@@ -97,28 +98,17 @@
                             <div key="NonOp" v-else></div>
                 </transition>
                 <transition name="custom-classes-transition"
-                            enter-active-class="animated slideInUp"
-                            leave-active-class="animated slideOutDown">
-                            <div key="message" v-if="Chat" class="ChatPage">
-                                <div class="input-group mb-3">
-                                        <form method="POST" class="input-group-prepend" action="{% url 'sendchatmessage' %}" enctype="multipart/form-data">{% csrf_token %}
-                                            <span class="input-group-text">
-                                                <input type="submit" value="send">
-                                            </span>
-                                            <span class="input-group-text" >
-                                                <input  type="text" name="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
-                                            </span>
-                                            <span class="input-group-text">
-                                                <input type="file" name="image" value="P">
-                                            </span>
-                                        <input type="hidden" name="username" value="{{ user.nickname }}">
-                                        <input type="hidden" name="icon" value="{{ user.image.url }}">
-                                        </form>
-                                </div>
+                            enter-active-class="animated fadeInDown"
+                            leave-active-class="animated fadeOutUp">
+                            <div key="pf" v-if="Profile" class="ProfilePage">
+                            <div><img src='{{ user.image.url }}' width="50" height="50"/></div>
+                            <div>Name:{{ user.username }}</div>
+                            <div>Nickname:{{ user.nickname }}</div>
+                            <div>Email:{{ user.email }}</div>
                             </div>
-                            <div key="NoMessage" v-else></div>
+                            <div key="nonpf" v-else>
+                            </div>
                 </transition>
-
         </div>
         {% endif %}
         {% block content %} {% endblock %}
@@ -140,18 +130,21 @@
       MenuPage: true,
       show: true,
       OptionPage: false,
-      Chat: true,
+      Profile: false,
     },
     methods:{
         OpenMenupage(){
             this.MenuPage = !this.MenuPage
             this.OptionPage = false
+            this.Profile = false
         },
         OpenOptionPage(){
             this.OptionPage = !this.OptionPage
+            this.Profile = false
         },
-        OpenChatPage(){
-            this.Chat = !this.Chat
+        OpenProfile(){
+            this.Profile = !this.Profile
+            this.OptionPage = false
         },
     },
   })

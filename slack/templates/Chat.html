@@ -15,11 +15,47 @@
         margin: 2% 20%;
         background-color: aquamarine;
     }
+    .ChatPage{
+              position: fixed;
+              z-index: 1; 
+              top: 90%;
+              left: 60%;
+            }
+    .ChatPageShowButton{
+              margin-left: 95%;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-    {% for item in object %}
+
+<templates id="app"> 
+    <input type="button" class="ChatPageShowButton && btn btn-primary" @click="ShowChatBar" value="send" >    
+    <transition name="custom-classes-transition"
+                            enter-active-class="animated slideInUp"
+                            leave-active-class="animated slideOutDown">
+                            <div key="message" v-if="Chat" class="ChatPage">
+                                <div class="input-group mb-3">
+                                        <form method="POST" class="input-group-prepend" action="{% url 'sendchatmessage' %}" enctype="multipart/form-data">{% csrf_token %}
+                                            <span class="input-group-text">
+                                                <input type="submit" value="send">
+                                            </span>
+                                            <span class="input-group-text" >
+                                                <input  type="text" name="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+                                            </span>
+                                            <span class="input-group-text">
+                                                <input type="file" name="image" value="P">
+                                            </span>
+                                        <input type="hidden" name="username" value="{{ user.nickname }}">
+                                        <input type="hidden" name="icon" value="{{ user.image.url }}">
+                                        </form>
+                                </div>
+                            </div>
+                            <div key="NoMessage" v-else></div>
+    </transition>
+</templates>
+
+{% for item in object %}
     
     <div class="ChatBar">{{ item.text }} <br> name:{{ item.username }}
         <a>
@@ -57,13 +93,26 @@
     new Vue({
         el: '#delete-animate',
         data: {
-            show: true
+            show: true,
         },
         methods:{
             ShowChange(){
-                console.log(this.show)
                 this.show = !this.show
-            }
+            },
+            ShowChatBar(){
+            this.Chat = !this.Chat
+        },
+        }
+    }),
+    new Vue({
+        el: '#app',
+        data: {
+            Chat: true,
+        },
+        methods:{
+            ShowChatBar(){
+            this.Chat = !this.Chat
+        },
         }
     })
     </script>
