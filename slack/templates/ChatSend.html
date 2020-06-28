@@ -33,7 +33,7 @@ body{
                 <a>{% if user.is_authenticated %}</a>
                 <form method="POST" enctype="multipart/form-data">{% csrf_token %}
                     <input type="hidden" name="username" value="{{ user.nickname }}">
-                    <input type="text" name="icon" value="{{ user.image.url }}">
+                    <input type="hidden" name="icon" value="{{ user.image.url }}">
                     <textarea name="text" cols="100" rows="10"></textarea><br>
                     <p>picture: <input type="file" name="image"></p>
                     <input type="submit" value="Send">
