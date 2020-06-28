@@ -25,7 +25,7 @@
 {% block content%}
 <body>
 <templates id="app"> 
-    <input type="button" class="ChatPageShowButton && btn btn-primary" @click="ShowChatBar" value="send" >    
+    <input type="button" class="ChatPageShowButton && btn btn-primary" @click="ShowChatBar" value="Chat" >    
     <transition name="custom-classes-transition"
                             enter-active-class="animated slideInUp"
                             leave-active-class="animated slideOutDown">
@@ -62,7 +62,7 @@
         <img src='{{ comment.icon }}' width="50" height="50"/>
     </div>
 {% endfor %}
-
+  <div><a href="../" class="alert alert-warning">Back</a></div>
 
 </body>
 {% endblock %}

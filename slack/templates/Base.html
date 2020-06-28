@@ -44,6 +44,7 @@
             
             .ProfilePage{
               background-color: #d1a046;
+              z-index: 3; 
               position: fixed;
               top: 0%;
               left: 70%;
@@ -84,8 +85,6 @@
                                 <a class="list-group-item list-group-item-action active" @click="OpenMenupage">Back</a>
                                 <a @click="OpenProfile" class="list-group-item list-group-item-action">Profile</a>
                                 <a @click="OpenOptionPage" class="list-group-item list-group-item-action">Option</a>
-                                <a href="../" class="list-group-item list-group-item-action">ChatRoom</a>
-                                <a href="../ChatSend/" class="list-group-item list-group-item-action">ChatBox</a>
                                 <a href="{% url 'logout' %}" class="list-group-item list-group-item-action">Logout</a>
                                 <a>{{ username }}</a>
                             </div>

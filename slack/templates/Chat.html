@@ -15,22 +15,13 @@
         margin: 2% 20%;
         background-color: aquamarine;
     }
-    .ChatPage{
-              position: fixed;
-              z-index: 1; 
-              top: 90%;
-              left: 60%;
-            }
-    .ChatPageShowButton{
-              margin-left: 95%;
-    }
 </style>
 {% endblock %}
 
 {% block content %}
 
 <templates id="app"> 
-    <input type="button" class="ChatPageShowButton && btn btn-primary" @click="ShowChatBar" value="send" >    
+    <input type="button" class="ChatPageShowButton && btn btn-primary" @click="ShowChatBar" value="Chat" >    
     <transition name="custom-classes-transition"
                             enter-active-class="animated slideInUp"
                             leave-active-class="animated slideOutDown">
