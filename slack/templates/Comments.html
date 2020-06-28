@@ -34,19 +34,18 @@
                 <input type="submit" value="Send">
         </form>
 
-{% for post in posts %}
-{% for comment in post.chatmessage.items.all %}
+
+{{post}}
+{% for comment in detail.items.all %}
     <div class="comment">
-    {% if post.chatmessage.pk == detail.pk %}
-        <strong>{{ comment.username }}</strong>
+        <strong>{{ comment.items.username }}</strong>
         <p>{{ comment.text|linebreaks }}</p>
         <p>{{ comment.icon }}</p>
-    {% endif %}
     </div>
 {% empty %}
     <p>No comments here yet :(</p>
 {% endfor %}
-{% endfor %}
+
 
 </body>
 {% endblock %}

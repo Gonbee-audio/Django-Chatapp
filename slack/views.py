@@ -45,7 +45,9 @@ def SendChatMessage(request):
     if request.method == 'POST':
        form = PostChatMessage(request.POST, request.FILES)
        if form.is_valid():
-           form.save()
+           post = form.save(commit=False)
+           post.nickname = request.user
+           post.save()
            return redirect('chat')
        else:
            form = PostChatMessage()
@@ -81,22 +83,18 @@ class ChangeYourAccount(UpdateView):
     template_name = 'base.html'
     success_url = reverse_lazy('chat')
 
-def CommentsSend(request, pk):
-    detail = ChatMessage.objects.get(pk=pk)
-    posts = Comments.objects.all()
-    logging.debug(posts)
-    return render(request, 'Comments.html', {'detail':detail, 'posts':posts}) 
+def CommentsSend(request, object_pk):
+    detail = get_object_or_404(ChatMessage, pk=object_pk)
+    return render(request, 'Comments.html', {'detail':detail}) 
 
 def ChatComment(request, object_pk):
     post = get_object_or_404(ChatMessage, pk=object_pk)
-    logging.debug(post)
     if request.method == 'POST':
         userform = CommentForm(request.POST)
         comment = userform.save(commit=False)
         comment.chatmessage = post
         comment.save()   
-
-        return redirect('comment', post.pk)
+        return redirect('comment', object_pk=post.pk)
     else:
        return redirect('comment', post.pk)
     return redirect('comment')
