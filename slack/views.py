@@ -87,10 +87,10 @@ def CommentsSend(request, object_pk):
 def ChatComment(request, object_pk):
     post = get_object_or_404(ChatMessage, pk=object_pk)
     if request.method == 'POST':
-        userform = CommentForm(request.POST, request.FILES)
+        userform = CommentForm(request.POST)
         comment = userform.save(commit=False)
         comment.chatmessage = post
-        comment.save()   
+        userform.save()   
         return redirect('comment', object_pk=post.pk)
     else:
        return redirect('comment', post.pk)

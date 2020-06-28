@@ -29,8 +29,8 @@
         {% endif %}
        <form method="POST" action="{% url 'chatcomment' detail.pk %}" enctype="multipart/form-data">{% csrf_token %}
                     <input type="hidden" name="username" value="{{ user.nickname }}">
+                    <input type="hidden" name="icon" value="{{ user.image.url }}">
                     <textarea name="text" cols="90" rows="10"></textarea><br>
-                    <p>picture: <input type="file" name="icon"></p>
                 <input type="submit" value="Send">
         </form>
 
@@ -38,7 +38,7 @@
     <div class="comment">
         <strong>Name:{{ comment.items.username }}</strong>
         <p>{{ comment.text|linebreaks }}</p>
-        <p>{{ comment.icon }}</p>
+        <img src='{{ comment.icon }}' width="50" height="50"/>
     </div>
 {% empty %}
     <p>No comments here yet :(</p>
