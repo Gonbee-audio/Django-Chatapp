@@ -1,0 +1,14 @@
+{% extends "Base.html" %}
+
+{% load static %}  
+
+{% block css %}
+{% endblock %}
+
+{% block content %}
+<div class="text-center">
+<div><a href="../">Back</a></div>
+<div><img src='{{user_de.icon}}' width="200" height="200"/></div>
+<div>{{user_de.username}}</div>
+</div>
+{% endblock %}

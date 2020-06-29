@@ -71,7 +71,7 @@
             {% endif %}
             <a class="btn btn-secondary" href="{% url 'comment' item.pk %}">Detail</a>
             {% if item.icon %}
-            <img src='{{ item.icon }}' width="50" height="50"/>
+            <a href="{% url 'userdetail' item.pk %}"><img src='{{ item.icon }}' width="50" height="50"/></a>
             {% endif %}
         </div>    
     </div>

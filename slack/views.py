@@ -54,7 +54,11 @@ def SendChatMessage(request):
 @login_required
 def ChatModel(request):
     object = ChatMessage.objects.order_by('created_date')
-    return render(request, 'Chat.html', {'object':object}) 
+    return render(request, 'Chat.html', {'object':object})
+
+def UserDetail(request, pk):
+    detail = get_object_or_404(ChatMessage, pk=pk)
+    return render(request, 'UserDetail.html', {'user_de':detail})  
 
 def Logout(request):
     logout(request)
