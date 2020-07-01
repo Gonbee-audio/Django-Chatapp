@@ -73,6 +73,9 @@
         
     </head>
     <body>
+    {% with get_profile as profile %}
+    <h1><a href="/">{{ profile.username }}</a></h1>
+    {% endwith %}
         {% if user.is_authenticated %}
         <div id="menu">
             <input type="button" value="Menu" class="btn btn-primary" style="position: fixed;" role="alert" @click="OpenMenupage">
@@ -87,6 +90,7 @@
                                 {% if user.image %}
                                 <img src='{{ user.image.url }}' width="50" height="50"/>
                                 {% endif %}
+                                {{users}}
                                 <p>{{ user.username }}でログイン中</p>
                                 <a class="list-group-item list-group-item-action active" @click="OpenMenupage">Back</a>
                                 <a @click="OpenProfile" class="list-group-item list-group-item-action">Profile</a>

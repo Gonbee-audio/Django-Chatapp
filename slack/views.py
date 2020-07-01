@@ -12,18 +12,24 @@ from django.utils import timezone
 import logging
 # Create your views here.
 
+def BaseHtmlSend(request):
+    return render(request, 'Base.html', {'users':users}) 
+
 def SingUpAccount(request):
     if request.method == "POST":
         username1 = request.POST['username']
         username2 = request.POST['username']
         nonhashpassword = request.POST['password']
         password1 = make_password(nonhashpassword)
-        try:
-            User.objects.get(username=username1)
-            return render(request, 'SignUp.html', {'error':'This username is already in use'})
-        except:
-            User.objects.create(username=username1, nickname=username2, password=password1)
-            return render(request, 'Signup.html', {'success':'Account created successfully'})
+        if username1 is None:
+            try:
+                User.objects.get(username=username1)
+                return render(request, 'SignUp.html', {'error':'This username is already in use'})
+            except:
+                User.objects.create(username=username1, nickname=username2, password=password1)
+                return render(request, 'Signup.html', {'success':'Account created successfully'})
+        else:
+            return render(request, 'SignUp.html', {})
     return render(request, 'SignUp.html', {})
 
 
@@ -62,7 +68,7 @@ def UserDetail(request, pk):
 
 def Logout(request):
     logout(request)
-    return redirect('login')
+    return redirect('chat')
 
 def DeleteView(request,pk):
     try:
@@ -98,4 +104,4 @@ def ChatComment(request, object_pk):
         return redirect('comment', object_pk=post.pk)
     else:
        return redirect('comment', post.pk)
-    return redirect('comment')
+    return redirect('comment') 
