@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from accounts.models import User
 from slack.models import ChatMessage, Comments
-from slack.forms import PostChatMessage, CommentForm, UpdataForm, RemakeSendForm
+from slack.forms import PostChatMessage, CommentForm, UpdataForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
@@ -86,21 +86,15 @@ def ChangeYourAccount(request, pk):
         post = get_object_or_404(User, pk=pk)
         form = UpdataForm(request.POST, request.FILES, instance=post)
         form.save() 
-
-        '''
-        nickname = request.POST['nickname']
-        commentpost = get_object_or_404(User, username=nickname)
-        formmodels = RemakeSendForm(request.POST, request.FILES, instance=commentpost)
-        formmodels.save()
-        '''
-        
-        '''
-        m = User.nickname
-        message = get_object_or_404(ChatMessage, username=m)
-        logging.debug('message')
-        f = PostChatMessage(request.POST, request.FILES, instance=message)
-        f.save()
-        '''
+        username1 = request.POST['username']
+        nickname1 = request.POST['nickname']
+        image1 = post.image.url
+        logging.debug(image1)
+        c = ChatMessage.objects.filter(username=username1)
+        for new in c:
+            new.nickname = nickname1
+            new.icon = image1
+            new.save()
         return redirect('chat')
     else:
         return redirect('chat')

@@ -21,4 +21,4 @@ class UpdataForm(forms.ModelForm):
 class RemakeSendForm(forms.ModelForm):
     class Meta:
         model = ChatMessage
-        fields = ('username', 'text', 'icon')
+        fields = ('nickname', 'icon')

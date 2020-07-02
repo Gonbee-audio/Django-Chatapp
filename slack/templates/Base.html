@@ -106,8 +106,9 @@
                             <div key="Op" v-if="OptionPage" class="OptionCatalog">
                                 <div>
                                     <form class="RemakeYourAccouts" action="{% url 'change' user.pk %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                                        <input type="hidden" name="username" value="{{ user.username }}">
                                         <input type="text" name="nickname" value="{{ user.nickname }}">
-                                        <p>picture: <input type="file" name="icon"></p>
+                                        <p>picture: <input type="file" name="image"></p>
                                         <input type="email" name="email" value="{{ user.email }}">
                                         <input type="submit" value="Send">
                                     </form>
