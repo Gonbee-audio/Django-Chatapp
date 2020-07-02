@@ -38,7 +38,8 @@
                                             <span class="input-group-text" >
                                                 <input  type="text" name="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
                                             </span>
-                                         <input type="hidden" name="username" value="{{ user.nickname }}">
+                                         <input type="hidden" name="nickname" value="{{ user.nickname }}">
+                                         <input type="hidden" name="username" value="{{ user.username }}">
                                          <input type="hidden" name="icon" value="{{ user.image.url }}">
                                         </form>
                                 </div>
@@ -48,7 +49,7 @@
 </templates>
     <div class="ChatBar">
     {{ object.id }}
-        <div>Name:{{ detail.username }}</div>
+        <div>Name:{{ detail.nickname }}</div>
         <div>Comments:{{ detail.text }}</div>
         <div><a href="../">Back</a></div>
         {% if object.image %}

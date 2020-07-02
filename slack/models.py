@@ -20,6 +20,7 @@ class ChatMessage(models.Model):
 class Comments(models.Model):
     chatmessage = models.ForeignKey(ChatMessage, on_delete=models.CASCADE, related_name='items')
     username = models.CharField(max_length=30)
+    nickname = models.CharField(max_length=30, null=True)
     text = models.CharField(max_length=1000)
     icon =models.CharField(max_length=1000)
     

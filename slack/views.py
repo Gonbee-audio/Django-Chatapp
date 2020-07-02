@@ -91,11 +91,21 @@ def ChangeYourAccount(request, pk):
         image1 = post.image.url
         logging.debug(image1)
         c = ChatMessage.objects.filter(username=username1)
-        for new in c:
-            new.nickname = nickname1
-            new.icon = image1
-            new.save()
-        return redirect('chat')
+        if c is None:
+            for new in c:
+                new.nickname = nickname1
+                new.icon = image1
+                new.save()
+                co = Comments.objects.filter(username=username1)
+                if co is None:
+                    for new in co:
+                        new.nickname = nickname1
+                        new.icon = image1
+                        new.save()
+                else:
+                    return redirect('chat')
+        else:
+            return redirect('chat')
     else:
         return redirect('chat')
     
