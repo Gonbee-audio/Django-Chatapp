@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from accounts.models import User
 from slack.models import ChatMessage, Comments
-from slack.forms import PostChatMessage, CommentForm
+from slack.forms import PostChatMessage, CommentForm, UpdataForm, RemakeSendForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
@@ -21,15 +21,12 @@ def SingUpAccount(request):
         username2 = request.POST['username']
         nonhashpassword = request.POST['password']
         password1 = make_password(nonhashpassword)
-        if username1 is None:
-            try:
-                User.objects.get(username=username1)
-                return render(request, 'SignUp.html', {'error':'This username is already in use'})
-            except:
-                User.objects.create(username=username1, nickname=username2, password=password1)
-                return render(request, 'Signup.html', {'success':'Account created successfully'})
-        else:
-            return render(request, 'SignUp.html', {})
+        try:
+            User.objects.get(username=username1)
+            return render(request, 'SignUp.html', {'error':'This username is already in use'})
+        except:
+            User.objects.create(username=username1, nickname=username2, password=password1)
+            return render(request, 'Signup.html', {'success':'Account created successfully'})
     return render(request, 'SignUp.html', {})
 
 
@@ -84,11 +81,31 @@ def Good(request,pk):
     post.save()
     return redirect('chat')
 
-class ChangeYourAccount(UpdateView):
-    model = User
-    fields = ('nickname', 'image', 'email')
-    template_name = 'base.html'
-    success_url = reverse_lazy('chat')
+def ChangeYourAccount(request, pk):
+    if request.method == 'POST':
+        post = get_object_or_404(User, pk=pk)
+        form = UpdataForm(request.POST, request.FILES, instance=post)
+        form.save() 
+
+        '''
+        nickname = request.POST['nickname']
+        commentpost = get_object_or_404(User, username=nickname)
+        formmodels = RemakeSendForm(request.POST, request.FILES, instance=commentpost)
+        formmodels.save()
+        '''
+        
+        '''
+        m = User.nickname
+        message = get_object_or_404(ChatMessage, username=m)
+        logging.debug('message')
+        f = PostChatMessage(request.POST, request.FILES, instance=message)
+        f.save()
+        '''
+        return redirect('chat')
+    else:
+        return redirect('chat')
+    
+   
 
 def CommentsSend(request, object_pk):
     detail = get_object_or_404(ChatMessage, pk=object_pk)

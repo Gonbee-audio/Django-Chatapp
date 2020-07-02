@@ -90,7 +90,6 @@
                                 {% if user.image %}
                                 <img src='{{ user.image.url }}' width="50" height="50"/>
                                 {% endif %}
-                                {{users}}
                                 <p>{{ user.username }}でログイン中</p>
                                 <a class="list-group-item list-group-item-action active" @click="OpenMenupage">Back</a>
                                 <a @click="OpenProfile" class="list-group-item list-group-item-action">Profile</a>
@@ -108,7 +107,7 @@
                                 <div>
                                     <form class="RemakeYourAccouts" action="{% url 'change' user.pk %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
                                         <input type="text" name="nickname" value="{{ user.nickname }}">
-                                        <p>picture: <input type="file" name="image"></p>
+                                        <p>picture: <input type="file" name="icon"></p>
                                         <input type="email" name="email" value="{{ user.email }}">
                                         <input type="submit" value="Send">
                                     </form>

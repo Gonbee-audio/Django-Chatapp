@@ -1,13 +1,24 @@
 from django import forms
 from .models import ChatMessage, Comments
+from accounts.models import User
 
 class PostChatMessage(forms.ModelForm):
     class Meta:
         model = ChatMessage
-        fields = ('username','text','image', 'icon')
+        fields = ('username','nickname', 'text','image', 'icon')
 
 class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comments
         fields = ('username', 'text','icon')
+
+class UpdataForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('nickname', 'image')
+
+class RemakeSendForm(forms.ModelForm):
+    class Meta:
+        model = ChatMessage
+        fields = ('username', 'text', 'icon')

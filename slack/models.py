@@ -6,6 +6,7 @@ from django.utils import timezone
 
 class ChatMessage(models.Model):
     username = models.CharField(max_length=30)
+    nickname = models.CharField(max_length=30, null=True)
     text = models.CharField(max_length=1000)
     image = models.ImageField(upload_to='images',blank=True, null=True)
     thumbnail = models.ImageField(upload_to='images',blank=True, null=True)
