@@ -88,6 +88,7 @@
         {% if user.is_authenticated %}
         <div id="menu">
             <input type="button" value="Menu" class="btn btn-primary" style="position: fixed;" role="alert" @click="OpenMenupage">
+
                 <transition name="custom-classes-transition"
                             enter-active-class="animated slideInLeft"
                             leave-active-class="animated slideOutLeft">
@@ -151,6 +152,7 @@
                             enter-active-class="animated fadeInDown"
                             leave-active-class="animated fadeOutUp">
                             <div key="pf" v-if="Profile" class="ProfilePage">
+                            <h2>My Proflie</h2>
                             <div><img src='{{ user.image.url }}' width="50" height="50"/></div>
                             <div>Name:{{ user.username }}</div>
                             <div>Nickname:{{ user.nickname }}</div>
@@ -188,6 +190,7 @@
             this.MenuPage = !this.MenuPage
             this.OptionPage = false
             this.Profile = false
+            this.LoginUser =false
         },
         OpenOptionPage(){
             this.OptionPage = !this.OptionPage

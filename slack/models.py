@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-from django.utils.functional import cached_property
+from accounts.models import User
 
 # Create your models here.
 
@@ -27,4 +27,15 @@ class Comments(models.Model):
     
     def __str__(self):
         return self.text
+
+class SecredMessage(models.Model):
+    user = models.ManyToManyField(User, blank=True)
+    username = models.CharField(max_length=30)
+    nickname = models.CharField(max_length=30, null=True)
+    text = models.CharField(max_length=1000)
+    icon =models.CharField(max_length=1000)
+
+    def __str__(self):
+        return self.nickname
+
 

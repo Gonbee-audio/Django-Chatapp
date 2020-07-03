@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from accounts.models import User
-from slack.models import ChatMessage, Comments
-from slack.forms import PostChatMessage, CommentForm, UpdataForm
+from slack.models import ChatMessage, Comments, SecredMessage
+from slack.forms import PostChatMessage, CommentForm, UpdataForm, SecredSendForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
@@ -103,8 +103,6 @@ def ChangeYourAccount(request, pk):
         return redirect('chat')
     else:
         return redirect('chat')
-    
-   
 
 def CommentsSend(request, object_pk):
     detail = get_object_or_404(ChatMessage, pk=object_pk)
@@ -121,3 +119,18 @@ def ChatComment(request, object_pk):
     else:
        return redirect('comment', post.pk)
     return redirect('comment') 
+
+def SecredMessageCreate(request, pk, other_pk):
+    if request.method == 'POST':
+        users = get_object_or_404(User, pk=pk)
+        yours = get_object_or_404(User, pk=other_pk)
+        username1 = request.POST['username']
+        nickname1 = request.POST['nickname']
+        text1 = request.POST['text']
+        userinstance = SecredMessage.objects.create(username=username1, nickname=nickname1, text=text1)
+        userinstance.user.add(users)
+        userinstance.user.add(yours)
+        return redirect('userdetail', pk=pk)
+    else:
+       return redirect('userdetail')
+    return redirect('userdetail') 

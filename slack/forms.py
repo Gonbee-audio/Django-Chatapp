@@ -1,5 +1,5 @@
 from django import forms
-from .models import ChatMessage, Comments
+from .models import ChatMessage, Comments, SecredMessage
 from accounts.models import User
 
 class PostChatMessage(forms.ModelForm):
@@ -21,4 +21,9 @@ class UpdataForm(forms.ModelForm):
 class RemakeSendForm(forms.ModelForm):
     class Meta:
         model = ChatMessage
+        fields = ('nickname', 'icon')
+
+class SecredSendForm(forms.ModelForm):
+    class Meta:
+        model = SecredMessage
         fields = ('nickname', 'icon')
