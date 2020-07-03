@@ -8,7 +8,7 @@
 {% block content %}
 <div class="text-center">
 <div><a href="../">Back</a></div>
-<div><img src='{{user_de.icon}}' width="200" height="200"/></div>
+<div><img src='{{user_de.image.url}}' width="200" height="200"/></div>
 <div>{{user_de.username}}</div>
 {% for users in users %}
 {{users.username}}

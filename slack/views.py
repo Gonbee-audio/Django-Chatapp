@@ -60,7 +60,7 @@ def ChatModel(request):
     return render(request, 'Chat.html', {'object':object})
 
 def UserDetail(request, pk):
-    detail = get_object_or_404(ChatMessage, pk=pk)
+    detail = get_object_or_404(User, pk=pk)
     return render(request, 'UserDetail.html', {'user_de':detail})  
 
 def Logout(request):

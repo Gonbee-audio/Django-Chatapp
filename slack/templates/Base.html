@@ -71,7 +71,7 @@
             .CheakLoginUserPage{
               overflow:auto;
               background-color: #faaab1;
-              z-index: 3; 
+              z-index: 0; 
               position: fixed;
               top: 0%;
               left: 70%;
@@ -120,7 +120,7 @@
                                 <h2>any user</h2>
                                     {% for  user in request.u %}
                                         <p>name:{{user.username}}</p>
-                                        <a><img src='{{ user.image.url }}' width="50" height="50"/></a><br>
+                                        <a href="{% url 'userdetail' user.pk %}" ><img src='{{ user.image.url }}' width="50" height="50"/></a><br>
                                     {% endfor %}
                                 </div>
                             </div>
@@ -188,7 +188,6 @@
             this.MenuPage = !this.MenuPage
             this.OptionPage = false
             this.Profile = false
-            this.LoginUser =false
         },
         OpenOptionPage(){
             this.OptionPage = !this.OptionPage
