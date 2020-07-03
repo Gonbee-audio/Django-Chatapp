@@ -46,6 +46,7 @@
             }
             
             .ProfilePage{
+              overflow:auto;
               background-color: #d1a046;
               z-index: 3; 
               position: fixed;
@@ -68,6 +69,7 @@
               border-radius: 50%;  /* 角丸半径を50%にする(=円形にする) */
             }
             .CheakLoginUserPage{
+              overflow:auto;
               background-color: #faaab1;
               z-index: 3; 
               position: fixed;
@@ -101,7 +103,7 @@
                                 <a class="list-group-item list-group-item-action active" @click="OpenMenupage">Back</a>
                                 <a @click="OpenProfile" class="list-group-item list-group-item-action">Profile</a>
                                 <a @click="OpenLoginUser" class="list-group-item list-group-item-action">User</a>
-                                <a @click="OpenOptionPage" class="list-group-item list-group-item-action">Option</a>
+                                <a @click="OpenOptionPage" class="list-group-item list-group-item-action">Options</a>
                                 <a href="{% url 'logout' %}" class="list-group-item list-group-item-action">Logout</a>
                                 <a>{{ username }}</a>
                             </div>
@@ -111,13 +113,14 @@
 
 
                 <transition name="custom-classes-transition"
-                            enter-active-class="animated slideInRight"
-                            leave-active-class="animated slideOutRight">
+                            enter-active-class="animated bounceInUp"
+                            leave-active-class="animated bounceOutDown">
                             <div key="Log" v-if="LoginUser" class="CheakLoginUserPage">
                                 <div>
                                 <h2>any user</h2>
                                     {% for  user in request.u %}
-                                        <h3><p>・{{user.username}}</p><br></h3>
+                                        <p>name:{{user.username}}</p>
+                                        <a><img src='{{ user.image.url }}' width="50" height="50"/></a><br>
                                     {% endfor %}
                                 </div>
                             </div>
@@ -130,6 +133,8 @@
                             leave-active-class="animated slideOutRight">
                             <div key="Op" v-if="OptionPage" class="OptionCatalog">
                                 <div>
+                                <h2>OPTIONS</h2>
+                                <h2>REMAKE ACCOUNT PAGE</h2>
                                     <form class="RemakeYourAccouts" action="{% url 'change' user.pk %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
                                         <input type="hidden" name="username" value="{{ user.username }}">
                                         <input type="text" name="nickname" value="{{ user.nickname }}">
@@ -141,6 +146,7 @@
                             </div>
                             <div key="NonOp" v-else></div>
                 </transition>
+
                 <transition name="custom-classes-transition"
                             enter-active-class="animated fadeInDown"
                             leave-active-class="animated fadeOutUp">
