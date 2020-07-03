@@ -120,8 +120,10 @@
                                 <div>
                                 <h2>any user</h2>
                                     {% for  users in request.u %}
+                                    {% if not user.username == users.username %}
                                         <p>name:{{users.username}}</p>
                                         <a href="{% url 'userdetail' users.pk user.pk %}" ><img src='{{ users.image.url }}' width="50" height="50"/></a><br>
+                                        {% endif %}
                                     {% endfor %}
                                 </div>
                             </div>

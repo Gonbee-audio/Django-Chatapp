@@ -31,7 +31,7 @@ class Comments(models.Model):
 class SecredMessage(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='usersend')
     username = models.CharField(max_length=30)
-    username = models.CharField(max_length=30)
+    yourname = models.CharField(max_length=30)
     nickname = models.CharField(max_length=30, null=True)
     text = models.CharField(max_length=1000)
     icon =models.CharField(max_length=1000)

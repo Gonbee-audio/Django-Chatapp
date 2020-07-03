@@ -67,7 +67,7 @@ def UserDetail(request, pk, other_pk):
     players = SecredMessage.objects.filter(user=User.objects.get(username=name))
     logging.debug(players)
 
-    return render(request, 'UserDetail.html', {'user_de':detail, 'users':players})  
+    return render(request, 'UserDetail.html', {'user_de':detail, 'users':yourid})  
 
 def Logout(request):
     logout(request)

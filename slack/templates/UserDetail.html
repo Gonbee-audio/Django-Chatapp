@@ -3,29 +3,45 @@
 {% load static %}  
 
 {% block css %}
+<style>
+    .ChatPage{
+        left: 80%;
+
+    }
+</style>
 {% endblock %}
 
 {% block content %}
 <div class="text-center">
-<div><a href="../">Back</a></div>
+<div><a href="/">Back</a></div>
 <div><img src='{{user_de.image.url}}' width="200" height="200"/></div>
+<!-- user -->
 <div>{{user_de.username}}</div>
-{% for users in user_de.usersend.all %}
-{{users.nickname}}
-{{users.text}}
+<h2>Individual message</h2>
+<div>{% for users in user_de.usersend.all %}<br>
+{% if users.username == user.username %}
+{{ users.username }}<br>
+{{users.text}}<br>
+name:{{users.nickname}}
+{% endif %}
 {% endfor %}
-{% for users in users.usersend.all %}
-{{users.nickname}}
-{{users.text}}
+
+{% for users in users.usersend.all %}<br>
+{% if user_de.username == users.username %}
+{{users.text}}<br>
+name:{{users.nickname}}
+{% endif %}
 {% endfor %}
 </div>
-<form method="POST" class="input-group-prepend" action="{% url 'secredmessagecreate' user_de.pk user.pk %}" enctype="multipart/form-data">{% csrf_token %}
+</div>
+<form method="POST" class="input-group-prepend && ChatPage" action="{% url 'secredmessagecreate' user_de.pk user.pk %}" enctype="multipart/form-data">{% csrf_token %}
                                             <span class="input-group-text">
                                                 <input type="submit" value="send">
                                             </span>
                                             <span class="input-group-text" >
                                                 <input  type="text" name="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
                                             </span>
+                                         <input type="hidden" name="yourname" value="{{ user_de.username }}">
                                          <input type="hidden" name="nickname" value="{{ user.nickname }}">
                                          <input type="hidden" name="username" value="{{ user.username }}">
                                          <input type="hidden" name="icon" value="{{ user.image.url }}">
