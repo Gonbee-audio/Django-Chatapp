@@ -67,15 +67,22 @@
                            img {
               border-radius: 50%;  /* 角丸半径を50%にする(=円形にする) */
             }
+            .CheakLoginUserPage{
+              background-color: #faaab1;
+              z-index: 3; 
+              position: fixed;
+              top: 0%;
+              left: 70%;
+              height: 100%;
+              width: 30%;
+            }
         </style>
 
         {% block css %}{% endblock %}
         
     </head>
     <body>
-    {% with get_profile as profile %}
-    <h1><a href="/">{{ profile.username }}</a></h1>
-    {% endwith %}
+   
         {% if user.is_authenticated %}
         <div id="menu">
             <input type="button" value="Menu" class="btn btn-primary" style="position: fixed;" role="alert" @click="OpenMenupage">
@@ -93,6 +100,7 @@
                                 <p>{{ user.username }}でログイン中</p>
                                 <a class="list-group-item list-group-item-action active" @click="OpenMenupage">Back</a>
                                 <a @click="OpenProfile" class="list-group-item list-group-item-action">Profile</a>
+                                <a @click="OpenLoginUser" class="list-group-item list-group-item-action">User</a>
                                 <a @click="OpenOptionPage" class="list-group-item list-group-item-action">Option</a>
                                 <a href="{% url 'logout' %}" class="list-group-item list-group-item-action">Logout</a>
                                 <a>{{ username }}</a>
@@ -100,6 +108,23 @@
                         </div>
                     </div>
                 </transition>
+
+
+                <transition name="custom-classes-transition"
+                            enter-active-class="animated slideInRight"
+                            leave-active-class="animated slideOutRight">
+                            <div key="Log" v-if="LoginUser" class="CheakLoginUserPage">
+                                <div>
+                                <h2>any user</h2>
+                                    {% for  user in request.u %}
+                                        <h3><p>・{{user.username}}</p><br></h3>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div key="NonLog" v-else></div>
+                </transition>
+
+                
                 <transition name="custom-classes-transition"
                             enter-active-class="animated slideInRight"
                             leave-active-class="animated slideOutRight">
@@ -150,19 +175,28 @@
       show: true,
       OptionPage: false,
       Profile: false,
+      LoginUser: false,
     },
     methods:{
         OpenMenupage(){
             this.MenuPage = !this.MenuPage
             this.OptionPage = false
             this.Profile = false
+            this.LoginUser =false
         },
         OpenOptionPage(){
             this.OptionPage = !this.OptionPage
             this.Profile = false
+            this.LoginUser =false
         },
         OpenProfile(){
             this.Profile = !this.Profile
+            this.OptionPage = false
+            this.LoginUser =false
+        },
+        OpenLoginUser(){
+            this.LoginUser = !this.LoginUser
+            this.Profile = false
             this.OptionPage = false
         },
     },
