@@ -12,6 +12,7 @@
 <div>{{user_de.username}}</div>
 {% for users in users %}
 {{users.username}}
+{{users.text}}
 {% endfor %}
 </div>
 <form method="POST" class="input-group-prepend" action="{% url 'secredmessagecreate' user_de.pk user.pk %}" enctype="multipart/form-data">{% csrf_token %}
@@ -21,8 +22,8 @@
                                             <span class="input-group-text" >
                                                 <input  type="text" name="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
                                             </span>
-                                         <input type="hidden" name="nickname" value="{{ user_de.nickname }}">
-                                         <input type="hidden" name="username" value="{{ user_de.username }}">
-                                         <input type="hidden" name="icon" value="{{ user_de.image.url }}">
+                                         <input type="hidden" name="nickname" value="{{ user.nickname }}">
+                                         <input type="hidden" name="username" value="{{ user.username }}">
+                                         <input type="hidden" name="icon" value="{{ user.image.url }}">
                                         </form>
 {% endblock %}

@@ -1,0 +1,87 @@
+{% extends "Base.html" %}
+
+{% load static %}  
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'SlackCss/Login.css' %}">
+<style>
+    body{
+        background-color: #f5f5f5;
+    }
+
+    .ChatBar{
+        border: 1px solid black;
+        padding: 1% 5%;
+        margin: 2% 20%;
+        background-color: aquamarine;
+    }
+    .ChatPage{
+        left: 80%;
+
+    }
+</style>
+{% endblock %}
+
+{% block content%}
+<body>
+<templates id="app"> 
+    <input type="button" class="ChatPageShowButton && btn btn-primary" @click="ShowChatBar" value="Chat" >    
+    <transition name="custom-classes-transition"
+                            enter-active-class="animated slideInUp"
+                            leave-active-class="animated slideOutDown">
+                            <div key="message" v-if="Chat" class="ChatPage">
+                                <div class="input-group mb-3">
+                                        <form method="POST" class="input-group-prepend" action="{% url 'chatcomment' detail.pk %}" enctype="multipart/form-data">{% csrf_token %}
+                                            <span class="input-group-text">
+                                                <input type="submit" value="send">
+                                            </span>
+                                            <span class="input-group-text" >
+                                                <input  type="text" name="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+                                            </span>
+                                         <input type="hidden" name="nickname" value="{{ user.nickname }}">
+                                         <input type="hidden" name="username" value="{{ user.username }}">
+                                         <input type="hidden" name="icon" value="{{ user.image.url }}">
+                                        </form>
+                                </div>
+                            </div>
+                            <div key="NoMessage" v-else></div>
+    </transition>
+</templates>
+    <div class="ChatBar">
+    {{ object.id }}
+        <div>Name:{{ detail.nickname }}</div>
+        <div>Comments:{{ detail.text }}</div>
+        <div><a href="../">Back</a></div>
+        {% if object.image %}
+            <p class="text-center"><img src='{{ object.image.url }}' width="400" height="400"/></p>
+        {% endif %}
+      
+<h2>Comments</h2>
+{% for comment in detail.items.all %}
+    <div class="comment">
+        <strong>Name:{{ comment.username }}</strong>
+        <p>{{ comment.text|linebreaks }}</p>
+        <img src='{{ comment.icon }}' width="50" height="50"/>
+    </div>
+{% endfor %}
+  
+
+</body>
+{% endblock %}
+
+{% block links %}
+    <script> 
+    new Vue({
+        el: '#app',
+        data: {
+            Chat: true,
+        },
+        methods:{
+            ShowChatBar(){
+            this.Chat = !this.Chat
+        },
+        }
+    })
+    </script>
+
+{% endblock %}

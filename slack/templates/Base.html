@@ -119,9 +119,9 @@
                             <div key="Log" v-if="LoginUser" class="CheakLoginUserPage">
                                 <div>
                                 <h2>any user</h2>
-                                    {% for  user in request.u %}
-                                        <p>name:{{user.username}}</p>
-                                        <a href="{% url 'userdetail' user.pk %}" ><img src='{{ user.image.url }}' width="50" height="50"/></a><br>
+                                    {% for  users in request.u %}
+                                        <p>name:{{users.username}}</p>
+                                        <a href="{% url 'userdetail' users.pk user.pk %}" ><img src='{{ users.image.url }}' width="50" height="50"/></a><br>
                                     {% endfor %}
                                 </div>
                             </div>

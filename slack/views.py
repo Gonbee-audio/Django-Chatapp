@@ -59,9 +59,15 @@ def ChatModel(request):
     object = ChatMessage.objects.order_by('created_date')
     return render(request, 'Chat.html', {'object':object})
 
-def UserDetail(request, pk):
+def UserDetail(request, pk, other_pk):
     detail = get_object_or_404(User, pk=pk)
-    return render(request, 'UserDetail.html', {'user_de':detail})  
+    yourid = get_object_or_404(User, pk=other_pk)
+    name = yourid.username
+    logging.debug(detail)
+    players = SecredMessage.objects.filter(user=User.objects.get(username=name))
+    logging.debug(players)
+
+    return render(request, 'UserDetail.html', {'user_de':detail, 'users':players})  
 
 def Logout(request):
     logout(request)
@@ -130,7 +136,7 @@ def SecredMessageCreate(request, pk, other_pk):
         userinstance = SecredMessage.objects.create(username=username1, nickname=nickname1, text=text1)
         userinstance.user.add(users)
         userinstance.user.add(yours)
-        return redirect('userdetail', pk=pk)
+        return redirect('userdetail', pk=pk, other_pk=other_pk )
     else:
        return redirect('userdetail')
     return redirect('userdetail') 

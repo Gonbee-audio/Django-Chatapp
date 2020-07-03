@@ -1,0 +1,112 @@
+{% extends "Base.html" %}
+
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'SlackCss/Chat.css' %}">
+<style>
+    body{
+        background-color: #f5f5f5;
+    }
+
+    .ChatBar{
+        border: 1px solid black;
+        padding: 1% 5%;
+        margin: 2% 20%;
+        background-color: aquamarine;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<templates id="app"> 
+    <input type="button" class="ChatPageShowButton && btn btn-primary" @click="ShowChatBar" value="Chat" >    
+    <transition name="custom-classes-transition"
+                            enter-active-class="animated slideInUp"
+                            leave-active-class="animated slideOutDown">
+                            <div key="message" v-if="Chat" class="ChatPage">
+                                <div class="input-group mb-3">
+                                        <form method="POST" class="input-group-prepend" action="{% url 'sendchatmessage' %}" enctype="multipart/form-data">{% csrf_token %}
+                                            <span class="input-group-text">
+                                                <input type="submit" value="send">
+                                            </span>
+                                            <span class="input-group-text" >
+                                                <input  type="text" name="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+                                            </span>
+                                            <span class="input-group-text">
+                                                <input type="file" name="image" value="P">
+                                            </span>
+                                        <input type="hidden" name="username" value="{{ user.username }}">
+                                        <input type="hidden" name="nickname" value="{{ user.nickname }}">
+                                        <input type="hidden" name="icon" value="{{ user.image.url }}">
+                                        </form>
+                                </div>
+                            </div>
+                            <div key="NoMessage" v-else></div>
+    </transition>
+</templates>
+
+{% for item in object %}
+    
+    <div class="ChatBar">{{ item.text }} <br> name:{{ item.nickname }}
+        <a>
+            {{ item.created_date|date:"n/j H:i:s" }}
+        </a>
+        {% if item.image %}<p class="text-center"><img src='{{item.image.url}}' width="200" height="200"/></p>{% endif %}
+        <div>
+            <a href="{% url 'good' item.pk %}" class="btn btn-info btn" role="button" aria-pressed="true">
+                Good！{{ item.good }} 
+            </a>
+            {% if user.is_authenticated %}
+                {% if user.username == item.username %}
+                <templates id="delete-animate">
+                    <transition
+                               name="custom-classes-transition"
+                               enter-active-class="animated rubberBand"
+                               leave-active-class="animated rubberBand">
+                        <a v-if="show" @click="ShowChange" href="{% url 'delete' item.pk %}" class="btn btn-danger" >Delete</a>
+                    </transition>
+                <templates>
+                {% endif %}
+            {% endif %}
+            <a class="btn btn-secondary" href="{% url 'comment' item.pk %}">Detail</a>
+            {% if item.icon %}
+                <img src='{{ item.icon }}' width="50" height="50"/>
+            {% endif %}
+        </div>    
+    </div>
+
+    {% endfor %}
+{% endblock %}
+
+{% block links %}
+    <script> 
+    new Vue({
+        el: '#delete-animate',
+        data: {
+            show: true,
+        },
+        methods:{
+            ShowChange(){
+                this.show = !this.show
+            },
+            ShowChatBar(){
+            this.Chat = !this.Chat
+        },
+        }
+    }),
+    new Vue({
+        el: '#app',
+        data: {
+            Chat: true,
+        },
+        methods:{
+            ShowChatBar(){
+            this.Chat = !this.Chat
+        },
+        }
+    })
+    </script>
+
+{% endblock %}
