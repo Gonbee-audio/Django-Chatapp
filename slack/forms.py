@@ -26,4 +26,4 @@ class RemakeSendForm(forms.ModelForm):
 class SecredSendForm(forms.ModelForm):
     class Meta:
         model = SecredMessage
-        fields = ('nickname', 'icon')
+        fields = ('nickname','text', 'icon')

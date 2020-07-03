@@ -10,8 +10,12 @@
 <div><a href="../">Back</a></div>
 <div><img src='{{user_de.image.url}}' width="200" height="200"/></div>
 <div>{{user_de.username}}</div>
-{% for users in users %}
-{{users.username}}
+{% for users in user_de.usersend.all %}
+{{users.nickname}}
+{{users.text}}
+{% endfor %}
+{% for users in users.usersend.all %}
+{{users.nickname}}
 {{users.text}}
 {% endfor %}
 </div>

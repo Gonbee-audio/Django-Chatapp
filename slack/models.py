@@ -29,7 +29,8 @@ class Comments(models.Model):
         return self.text
 
 class SecredMessage(models.Model):
-    user = models.ManyToManyField(User, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='usersend')
+    username = models.CharField(max_length=30)
     username = models.CharField(max_length=30)
     nickname = models.CharField(max_length=30, null=True)
     text = models.CharField(max_length=1000)

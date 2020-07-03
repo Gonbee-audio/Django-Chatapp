@@ -130,13 +130,11 @@ def SecredMessageCreate(request, pk, other_pk):
     if request.method == 'POST':
         users = get_object_or_404(User, pk=pk)
         yours = get_object_or_404(User, pk=other_pk)
-        username1 = request.POST['username']
-        nickname1 = request.POST['nickname']
-        text1 = request.POST['text']
-        userinstance = SecredMessage.objects.create(username=username1, nickname=nickname1, text=text1)
-        userinstance.user.add(users)
-        userinstance.user.add(yours)
-        return redirect('userdetail', pk=pk, other_pk=other_pk )
+        userform = SecredSendForm(request.POST)
+        comment = userform.save(commit=False)
+        comment.user = users
+        userform.save()   
+        return redirect('userdetail',pk=pk, other_pk=other_pk)
     else:
        return redirect('userdetail')
     return redirect('userdetail') 
