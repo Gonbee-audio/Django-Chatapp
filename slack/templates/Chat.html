@@ -86,6 +86,8 @@
    {% if item.username == user.username %}
    
     <div class="MyChatBar">{{ item.text }}<br>
+
+    
         <a>
             {{ item.created_date|date:"n/j H:i:s" }}
         </a>
@@ -106,12 +108,15 @@
                 <templates>
                 {% endif %}
             {% endif %}
-            <a class="btn btn-secondary" href="{% url 'comment' item.pk %}">Detail</a> 
+        <a class="btn btn-secondary" href="{% url 'comment' item.pk %}">Detail</a> 
+
+
+
             {% if item.icon %}
                <a class="MyChat">  </a>   <a class="MyIcon">{{ item.nickname }}<br><img src='{{ item.icon }}' width="70" height="70"/></a></a>
             {% endif %}           
         </div> 
-
+    </div>
 
         {% else %}
 

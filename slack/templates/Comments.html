@@ -59,7 +59,7 @@
 <h2>Comments</h2>
 {% for comment in detail.items.all %}
     <div class="comment">
-        <strong>Name:{{ comment.username }}</strong>
+        <strong>Name:{{ comment.nickname }}</strong>
         <p>{{ comment.text|linebreaks }}</p>
         <img src='{{ comment.icon }}' width="50" height="50"/>
     </div>

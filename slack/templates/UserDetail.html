@@ -7,36 +7,79 @@
     .ChatPage{
         left: 80%;
     }
-    .ChatBar{
-        border: 1px solid black;
+    .MyChatBar{
         padding: 1% 5%;
         margin: 2% 20%;
         background-color: aquamarine;
+        border-radius: 10%;
+    }
+    .MyChat{
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 20px 0 0 41px;
+        position:absolute;
+        left:80%;
+        border-color: transparent transparent transparent aquamarine;
+            }
+    .MyIcon{
+        left: 85%;
+        position:absolute;
+    }
+    .OtherIcon{
+        Right: 85%;
+        position:absolute;
+    }
+    .OtherBar{
+        padding: 1% 5%;
+        margin: 2% 20%;
+        background-color: aquamarine;
+        border-radius: 10%;
+    }
+    .OtherChat{
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 0 20px 41px;
+        position:absolute;
+        Right:80%;
+        border-color: transparent transparent aquamarine transparent;
     }
 </style>
+
 {% endblock %}
 
 {% block content %}
 <div class="text-center">
-<div><a href="/">Back</a></div>
-<div><img src='{{user_de.image.url}}' width="200" height="200"/></div>
-<!-- user -->
-<div>{{user_de.username}}</div>
-<h2>Individual message</h2>
-<div class="ChatBar">{% for users in user_de.usersend.all %}<br>
-{% if users.username == user.username %}
-<h4>name:{{ users.nickname }}</h4><br>
-{{users.text}}<br>
-{% endif %}
-{% endfor %}
+    <div><a href="/">Back</a></div>
+    <div><img src='{{user_de.image.url}}' width="200" height="200"/></div>
+    <div>{{user_de.username}}</div>
+    <h2>Individual message</h2>
 
-{% for users in users.usersend.all %}<br>
-{% if user_de.username == users.username %}
-<h4>name:{{users.nickname}}</h4><br>
-{{users.text}}<br>
-{% endif %}
-{% endfor %}
-</div>
+    <!-- user -->
+    {% for users in user_de.usersend.all %}<br>
+    <div class="MyChatBar">
+    {% if users.username == user.username %}
+    
+    <a class="MyChat"></a>
+    {{users.text}}<br>
+    <a class="MyIcon">{{ users.nickname }}<br><img src='{{users.icon}}' width="70" height="70"/></a>
+    {% endif %}
+    </div>
+    {% endfor %}
+    
+
+
+    <!--other-->
+    {% for users in users.usersend.all %}<br>
+    <div class="OtherBar">
+    {% if user_de.username == users.username %}
+    <a class="OtherChat"></a>
+    {{users.text}}<br>
+    <a class="OtherIcon">{{ users.nickname }}<br><img src='{{users.icon}}' width="70" height="70"/></a>
+    {% endif %}   
+    </div> 
+    {% endfor %}
 </div>
 <form method="POST" class="input-group-prepend && ChatPage" action="{% url 'secredmessagecreate' user_de.pk user.pk %}" enctype="multipart/form-data">{% csrf_token %}
                                             <span class="input-group-text">
