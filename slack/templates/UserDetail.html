@@ -60,7 +60,6 @@
     {% for users in user_de.usersend.all %}<br>
     <div class="MyChatBar">
     {% if users.username == user.username %}
-    
     <a class="MyChat"></a>
     {{users.text}}<br>
     <a class="MyIcon">{{ users.nickname }}<br><img src='{{users.icon}}' width="70" height="70"/></a>

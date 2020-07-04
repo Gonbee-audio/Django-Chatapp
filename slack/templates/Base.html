@@ -26,7 +26,7 @@
             }
             .IconPosition{
                 z-index: 2;
-                position: fixed;
+                position: absolute;
                 top: 10%;
                 left: 0%;
                 
@@ -62,8 +62,13 @@
               left: 60%;
             }
             .ChatPageShowButton{
+                margin-left: 95%;
                 position: fixed;
-              margin-left: 95%;
+            }
+            @media screen and (max-width: 768px) {
+                .ChatPageShowButton {
+                        margin-left: 90%;
+                      }
             }
                            img {
               border-radius: 50%;  /* 角丸半径を50%にする(=円形にする) */
@@ -131,7 +136,7 @@
                                 <h2>OTHER</h2>
                                     {% for  users in request.u %}
                                     {% if not user.username == users.username %}
-                                        <p>name:{{users.username}}</p>
+                                        {{users.username}}<br>
                                         <a href="{% url 'userdetail' users.pk user.pk %}" ><img src='{{ users.image.url }}' width="50" height="50"/></a><br>
                                         {% endif %}
                                     {% endfor %}
@@ -168,7 +173,7 @@
                             <h2>My Proflie</h2>
                             <div class="text-center">
                             <div><img src='{{ user.image.url }}' width="50" height="50"/></div>
-                            <div>Name:{{ user.username }}</div>
+                            <div>YourName:{{ user.username }}</div>
                             <div>Nickname:{{ user.nickname }}</div>
                             <div>Email:{{ user.email }}</div>
                             </div>
