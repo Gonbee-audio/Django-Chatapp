@@ -71,12 +71,21 @@
             .CheakLoginUserPage{
               overflow:auto;
               background-color: #faaab1;
-              z-index: 0; 
+              z-index: 3; 
               position: fixed;
               top: 0%;
               left: 70%;
               height: 100%;
               width: 30%;
+            }
+            .Updatepage{
+              z-index: 2;
+              background-color: #fadeaa;
+              position: fixed;
+              top: 0%;
+              left: 25%;
+              height: 100%;
+              width: 75%;
             }
         </style>
 
@@ -86,7 +95,7 @@
     <body>
    
         {% if user.is_authenticated %}
-        <div id="menu">
+        <templates id="menu">
             <input type="button" value="Menu" class="btn btn-primary" style="position: fixed;" role="alert" @click="OpenMenupage">
 
                 <transition name="custom-classes-transition"
@@ -100,11 +109,12 @@
                                 {% if user.image %}
                                 <img src='{{ user.image.url }}' width="50" height="50"/>
                                 {% endif %}
-                                <p>{{ user.username }}でログイン中</p>
+                                <p>Yourname:{{ user.username }}</p>
                                 <a class="list-group-item list-group-item-action active" @click="OpenMenupage">Back</a>
                                 <a @click="OpenProfile" class="list-group-item list-group-item-action">Profile</a>
                                 <a @click="OpenLoginUser" class="list-group-item list-group-item-action">User</a>
                                 <a @click="OpenOptionPage" class="list-group-item list-group-item-action">Options</a>
+                                <a @click="OpenUpdate" class="list-group-item list-group-item-action">Updated Contents</a>
                                 <a href="{% url 'logout' %}" class="list-group-item list-group-item-action">Logout</a>
                                 <a>{{ username }}</a>
                             </div>
@@ -118,7 +128,7 @@
                             leave-active-class="animated bounceOutDown">
                             <div key="Log" v-if="LoginUser" class="CheakLoginUserPage">
                                 <div>
-                                <h2>any user</h2>
+                                <h2>OTHER</h2>
                                     {% for  users in request.u %}
                                     {% if not user.username == users.username %}
                                         <p>name:{{users.username}}</p>
@@ -153,17 +163,44 @@
                 <transition name="custom-classes-transition"
                             enter-active-class="animated fadeInDown"
                             leave-active-class="animated fadeOutUp">
+                            
                             <div key="pf" v-if="Profile" class="ProfilePage">
                             <h2>My Proflie</h2>
+                            <div class="text-center">
                             <div><img src='{{ user.image.url }}' width="50" height="50"/></div>
                             <div>Name:{{ user.username }}</div>
                             <div>Nickname:{{ user.nickname }}</div>
                             <div>Email:{{ user.email }}</div>
                             </div>
+                            </div>
                             <div key="nonpf" v-else>
                             </div>
                 </transition>
-        </div>
+
+
+<!--  Update Info-->
+                <transition name="custom-classes-transition"
+                            enter-active-class="animated fadeInDown"
+                            leave-active-class="animated fadeOutUp">
+                            <div key="up" v-if="UpdatePage" class="Updatepage">
+                                <h2>Updeta Contents</h2>
+                                    <h2>ver 2.0</h2>
+                                    <tr>
+                                       <td>・Vueを使ってUIを一新しました</td><br>
+                                       <td>・アカウント編集機能を追加しました</td><br>
+                                       <td>・goodボタンを追加しました</td><br>
+                                       <td>・detailボタンを追加しました</td><br>
+                                       <td>・一対一のチャット機能、コメント機能を追加しました</td><br>
+                                       <td>etc....</td>
+                                    </tr>
+                                </div>
+                            </div>
+                            <div key="nonup" v-else>
+                            </div>
+                </transition>
+
+
+        </templates>
         {% endif %}
         {% block content %} {% endblock %}
     </body>
@@ -186,6 +223,7 @@
       OptionPage: false,
       Profile: false,
       LoginUser: false,
+      UpdatePage: false,
     },
     methods:{
         OpenMenupage(){
@@ -193,21 +231,31 @@
             this.OptionPage = false
             this.Profile = false
             this.LoginUser =false
+            this.UpdatePage = false
         },
         OpenOptionPage(){
             this.OptionPage = !this.OptionPage
             this.Profile = false
             this.LoginUser =false
+            this.UpdatePage = false
         },
         OpenProfile(){
             this.Profile = !this.Profile
             this.OptionPage = false
             this.LoginUser =false
+            this.UpdatePage = false
         },
         OpenLoginUser(){
             this.LoginUser = !this.LoginUser
             this.Profile = false
             this.OptionPage = false
+            this.UpdatePage = false
+        },
+        OpenUpdate(){
+            this.UpdatePage = !this.UpdatePage
+            this.OptionPage = false
+            this.Profile = false
+            this.LoginUser =false
         },
     },
   })

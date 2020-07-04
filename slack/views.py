@@ -106,6 +106,11 @@ def ChangeYourAccount(request, pk):
                 new.nickname = nickname1
                 new.icon = image1
                 new.save()
+                ch = Comments.objects.filter(username=username1)
+                for new in ch:
+                    new.nickname = nickname1
+                    new.icon = image1
+                    new.save()
         return redirect('chat')
     else:
         return redirect('chat')

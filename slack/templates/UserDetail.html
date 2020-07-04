@@ -6,7 +6,12 @@
 <style>
     .ChatPage{
         left: 80%;
-
+    }
+    .ChatBar{
+        border: 1px solid black;
+        padding: 1% 5%;
+        margin: 2% 20%;
+        background-color: aquamarine;
     }
 </style>
 {% endblock %}
@@ -18,18 +23,17 @@
 <!-- user -->
 <div>{{user_de.username}}</div>
 <h2>Individual message</h2>
-<div>{% for users in user_de.usersend.all %}<br>
+<div class="ChatBar">{% for users in user_de.usersend.all %}<br>
 {% if users.username == user.username %}
-{{ users.username }}<br>
+<h4>name:{{ users.nickname }}</h4><br>
 {{users.text}}<br>
-name:{{users.nickname}}
 {% endif %}
 {% endfor %}
 
 {% for users in users.usersend.all %}<br>
 {% if user_de.username == users.username %}
+<h4>name:{{users.nickname}}</h4><br>
 {{users.text}}<br>
-name:{{users.nickname}}
 {% endif %}
 {% endfor %}
 </div>
