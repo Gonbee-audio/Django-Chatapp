@@ -59,7 +59,7 @@
 {% block content %}
 <div class="text-center">
 <!--user detail -->
-    <div><a href="/">Back</a></div>
+    <div><a href="{% url 'chat' %}">Back</a></div>
     <div><img src='{{user_de.image.url}}' width="200" height="200"/></div>
     <div>{{user_de.username}}</div>
     <h2>Individual message</h2>

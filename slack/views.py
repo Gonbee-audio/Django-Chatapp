@@ -26,7 +26,7 @@ def SingUpAccount(request):
             return render(request, 'SignUp.html', {'error':'This username is already in use'})
         except:
             User.objects.create(username=username1, nickname=username2, password=password1)
-            return render(request, 'Signup.html', {'success':'Account created successfully'})
+            return render('chat')
     return render(request, 'SignUp.html', {})
 
 
