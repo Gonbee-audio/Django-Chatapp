@@ -11,7 +11,7 @@
     .SignUpMenu{
         border: 1px double black;
         border-radius: 10%;
-        padding: 20% 10%;
+        padding: 5% 10%;
         margin: 0 20%;
         background-color: #ffffff;
     }
@@ -31,10 +31,12 @@
         <a href="../">Login Page</a>
         <h3>{% if success %}{{ success }}<a href="../Login">Login Page</a>{% endif %}</h3>
         <div class="TypoBox">
-            <a>name:　　　　</a><input type="text" name="username" placeholder="username">
+            <a>name:</a><br>
+            <input type="text" name="username" placeholder="username">
         </div>
         <div class="TypoBox">
-            <a>password:　</a><input type="password" name="password" placeholder="password">
+            <a>password:</a><br>
+            <input type="password" name="password" placeholder="password">
         </div>
         <div class="TypoBox">
             <input type="submit" class="btn btn-primary" value="Sign Up">

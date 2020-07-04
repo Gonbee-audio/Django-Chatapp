@@ -61,6 +61,13 @@
               top: 90%;
               left: 60%;
             }
+            @media screen and (max-width: 768px) {
+                .ChatPage {
+                        top: 92%;
+                        left: 0%;
+                        width: 100%;
+                      }
+            }
             .ChatPageShowButton{
                 margin-left: 95%;
                 position: fixed;
@@ -71,8 +78,9 @@
                       }
             }
                            img {
-              border-radius: 50%;  /* 角丸半径を50%にする(=円形にする) */
+              border-radius: 50%;  
             }
+            
             .CheakLoginUserPage{
               overflow:auto;
               background-color: #faaab1;
@@ -102,7 +110,7 @@
         {% if user.is_authenticated %}
         <templates id="menu">
             <input type="button" value="Menu" class="btn btn-primary" style="position: fixed;" role="alert" @click="OpenMenupage">
-
+<!--Menu Page-->
                 <transition name="custom-classes-transition"
                             enter-active-class="animated slideInLeft"
                             leave-active-class="animated slideOutLeft">
@@ -126,8 +134,7 @@
                         </div>
                     </div>
                 </transition>
-
-
+<!--Other-->
                 <transition name="custom-classes-transition"
                             enter-active-class="animated bounceInUp"
                             leave-active-class="animated bounceOutDown">
@@ -144,8 +151,9 @@
                             </div>
                             <div key="NonLog" v-else></div>
                 </transition>
-
+<!-- Option Page -->
                 
+
                 <transition name="custom-classes-transition"
                             enter-active-class="animated slideInRight"
                             leave-active-class="animated slideOutRight">
@@ -155,15 +163,17 @@
                                 <h2>REMAKE ACCOUNT PAGE</h2>
                                     <form class="RemakeYourAccouts" action="{% url 'change' user.pk %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
                                         <input type="hidden" name="username" value="{{ user.username }}">
-                                        <input type="text" name="nickname" value="{{ user.nickname }}">
-                                        <p>picture: <input type="file" name="image"></p>
-                                        <input type="email" name="email" value="{{ user.email }}">
+                                        <p>nickname: <input type="text" name="nickname" value="{{ user.nickname }}"></p>
+                                        <p>icon: <input type="file" name="image"></p>
+                                        <p>email: <input type="email" name="email" value="{{ user.email }}"></p>
                                         <input type="submit" value="Send">
                                     </form>
                                 </div>
                             </div>
                             <div key="NonOp" v-else></div>
                 </transition>
+<!-- Peofile -->
+
 
                 <transition name="custom-classes-transition"
                             enter-active-class="animated fadeInDown"
@@ -262,6 +272,14 @@
             this.Profile = false
             this.LoginUser =false
         },
+    },
+  })
+
+  var app = new Vue({
+    el: '#caution',
+    delimiters: ['[|[', ']|]'],
+    data: {
+     RemakeCaution: false,
     },
   })
     </script>

@@ -7,6 +7,13 @@
     .ChatPage{
         left: 80%;
     }
+    @media screen and (max-width: 768px) {
+                .ChatPage {
+                        top: 92%;
+                        left: 0%;
+                        width: 100%;
+                      }
+    }
     .MyChatBar{
         padding: 1% 5%;
         margin: 2% 20%;
@@ -51,11 +58,13 @@
 
 {% block content %}
 <div class="text-center">
+<!--user detail -->
     <div><a href="/">Back</a></div>
     <div><img src='{{user_de.image.url}}' width="200" height="200"/></div>
     <div>{{user_de.username}}</div>
     <h2>Individual message</h2>
 
+<!-- SecretMessage model of Individual message -->
     <!-- user -->
     {% for users in user_de.usersend.all %}<br>
     <div class="MyChatBar">
@@ -80,6 +89,7 @@
     </div> 
     {% endfor %}
 </div>
+<!--SecretMessage model -->
 <form method="POST" class="input-group-prepend && ChatPage" action="{% url 'secredmessagecreate' user_de.pk user.pk %}" enctype="multipart/form-data">{% csrf_token %}
                                             <span class="input-group-text">
                                                 <input type="submit" value="send">

@@ -19,12 +19,14 @@
         left: 80%;
 
     }
+    
 </style>
 {% endblock %}
 
 {% block content%}
 <body>
 <templates id="app"> 
+<!-- Comments models form -->
     <input type="button" class="ChatPageShowButton && btn btn-primary" @click="ShowChatBar" value="Chat" >    
     <transition name="custom-classes-transition"
                             enter-active-class="animated slideInUp"
@@ -45,21 +47,26 @@
                                 </div>
                             </div>
                             <div key="NoMessage" v-else></div>
+
+
     </transition>
 </templates>
+
+<!-- detail chatsend model-->
     <div class="ChatBar">
-    {{ object.id }}
         <div>Name:{{ detail.nickname }}</div>
         <div>Comments:{{ detail.text }}</div>
         <div><a href="../">Back</a></div>
         {% if object.image %}
             <p class="text-center"><img src='{{ object.image.url }}' width="400" height="400"/></p>
         {% endif %}
-      
+
+
+<!--Comments-->
 <h2>Comments</h2>
 {% for comment in detail.items.all %}
     <div class="comment">
-        <strong>Name:{{ comment.nickname }}</strong>
+        <strong>Name:{{ comment.nickrname }}</strong>
         <p>{{ comment.text|linebreaks }}</p>
         <img src='{{ comment.icon }}' width="50" height="50"/>
     </div>
