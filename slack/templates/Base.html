@@ -59,25 +59,16 @@
               position: fixed;
               z-index: 1; 
               top: 90%;
-              left: 60%;
+              left: 0%;
             }
-            @media screen and (max-width: 768px) {
-                .ChatPage {
-                        top: 92%;
-                        left: 0%;
-                        width: 100%;
-                      }
+            .MobileMenu{
+                display:none;
             }
             .ChatPageShowButton{
                 margin-left: 95%;
                 position: fixed;
             }
-            @media screen and (max-width: 768px) {
-                .ChatPageShowButton {
-                        margin-left: 90%;
-                      }
-            }
-                           img {
+                   img {
               border-radius: 50%;  
             }
             
@@ -100,6 +91,59 @@
               height: 100%;
               width: 75%;
             }
+            @media screen and (max-width: 768px) {
+                .ChatPage {
+                        top: 82%;
+                        left: 0%;
+                        width: 100%;
+                      }
+                .ChatPageShowButton {
+                        margin-left: 90%;
+                      }
+                .MobileMenu{ 
+                        position: fixed;
+                        display:block; 
+                        background-color: #fadeaa;
+                        border: 1px solid #000000;
+                        z-index: 9999;
+                        padding-bottom: 10%;
+                        margin-top:40%;
+                        width: 100%;
+                        background-color: #89c7de;
+                        color: #fff;
+                        text-align: center;
+                        padding: 30px 0;/*←絶対位置*/
+                        bottom: 0; /*下に固定*/
+                      }
+                    .NonMobilePage{
+                        display:none;
+                       }
+                    .Updatepage{
+                        width: 100%;
+                        left: 0%;
+                        top: 0%;
+                        height: 90%;
+                       }
+                    .ProfilePage{
+                        width: 100%;
+                        left: 0%;
+                        top: 0%;
+                        height: 90%;
+                    }
+                    .OptionCatalog{
+                        width: 100%;
+                        left: 0%;
+                        top: 0%;
+                        height: 90%;
+                    }
+                    .CheakLoginUserPage{
+                        width: 100%;
+                        left: 0%;  
+                        top: 0%;
+                        height: 90%;                     
+                    }
+            }
+            
         </style>
 
         {% block css %}{% endblock %}
@@ -109,12 +153,33 @@
    
         {% if user.is_authenticated %}
         <templates id="menu">
-            <input type="button" value="Menu" class="btn btn-primary" style="position: fixed;" role="alert" @click="OpenMenupage">
+           <templates class="NonMobilePage"> <input type="button" value="Menu" class="btn btn-primary" style="position: fixed;" role="alert" @click="OpenMenupage"></templates>
 <!--Menu Page-->
                 <transition name="custom-classes-transition"
                             enter-active-class="animated slideInLeft"
                             leave-active-class="animated slideOutLeft">
-                    <div key="hidden" v-if="MenuPage" ></div>
+<!--Mobile Menu Page -->
+                    <div key="hidden" v-if="MenuPage">
+                        <div class="MobileMenu">
+                                <a @click="OpenProfile">
+                                    <img class="img" src="/media/mobileicon/profile.png" width="32" height="26" alt="">
+                                </a>
+                                <a @click="OpenLoginUser">
+                                    <img class="img" src="/media/mobileicon/user.png" width="32" height="26" alt="">
+                                </a>
+                                <a @click="OpenOptionPage">
+                                    <img class="img" src="/media/mobileicon/option.png" width="32" height="26" alt="">
+                                </a>
+                                <a @click="OpenUpdate">
+                                    <img class="img" src="/media/mobileicon/update.png" width="32" height="26" alt="">
+                                </a>
+                                <a href="{% url 'logout' %}">
+                                    <img class="img" src="/media/mobileicon/logout.png" width="32" height="26" alt="">
+                                </a>
+                        </div>
+                    </div>
+
+
                     <div key="show"v-else class="MenuCatalog">
                         <div class="IconPosition">
                             <div class="list-group">
@@ -123,8 +188,8 @@
                                 <img src='{{ user.image.url }}' width="50" height="50"/>
                                 {% endif %}
                                 <p>Yourname:{{ user.username }}</p>
-                                <a class="list-group-item list-group-item-action active" @click="OpenMenupage">Back</a>
-                                <a @click="OpenProfile" class="list-group-item list-group-item-action">Profile</a>
+                                <div class="list-group-item list-group-item-action " @click="OpenMenupage">Back</div>
+                                <a @click="OpenProfile"  class="list-group-item list-group-item-action " >Profile</a>
                                 <a @click="OpenLoginUser" class="list-group-item list-group-item-action">User</a>
                                 <a @click="OpenOptionPage" class="list-group-item list-group-item-action">Options</a>
                                 <a @click="OpenUpdate" class="list-group-item list-group-item-action">Updated Contents</a>
@@ -217,7 +282,7 @@
 
         </templates>
         {% endif %}
-        {% block content %} {% endblock %}
+            {% block content %} {% endblock %}
     </body>
 
 

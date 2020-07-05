@@ -19,6 +19,11 @@
         left: 80%;
 
     }
+    @media screen and (max-width: 768px) {
+    .ChatPage {
+     left:0%;
+    }
+}
     
 </style>
 {% endblock %}
@@ -35,7 +40,9 @@
                                 <div class="input-group mb-3">
                                         <form method="POST" class="input-group-prepend" action="{% url 'chatcomment' detail.pk %}" enctype="multipart/form-data">{% csrf_token %}
                                             <span class="input-group-text">
-                                                <input type="submit" value="send">
+                                                <button type="submit">
+                                                    <img src="/media/menuicon/sendmessage.png" width="32" height="26" alt="色玉"><br>
+                                                </button>
                                             </span>
                                             <span class="input-group-text" >
                                                 <input  type="text" name="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
@@ -71,6 +78,8 @@
         <img src='{{ comment.icon }}' width="50" height="50"/>
     </div>
 {% endfor %}
+
+<div class="MobileHeight"></div>
   
 
 </body>

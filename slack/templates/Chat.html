@@ -8,7 +8,9 @@
     body{
         background-color: #f5f5f5;
     }
-
+    .img{
+         border-radius: 0%
+    }
     .MyChatBar{
         padding: 1% 5%;
         margin: 2% 20%;
@@ -47,13 +49,40 @@
         Right:80%;
         border-color: transparent transparent aquamarine transparent;
     }
+    @media screen and (max-width: 768px) {
+    .MyChatBar {
+        margin-right: 3%;
+        margin-left: 41%;
+    }
+    .MyChat{
+        left: 92%;
+
+    }
+    .MobileImg{
+        width: 40px;
+        height: auto; 
+    }
+    .MobileChatname{
+        font-size:10%;
+    }
+    .OtherBar{
+        margin: 2% 18% 0% 23%;
+    }
+    .OtherChat{
+        Right: 73%;
+    }
+    .MobileHeight{
+        padding-bottom: 140px
+
+    }
+}
 </style>
 {% endblock %}
 
 {% block content %}
 
 <templates id="app"> 
-    <input type="button" class="ChatPageShowButton && btn btn-primary" @click="ShowChatBar" value="Chat" >    
+    <templates class="NonMobilePage"><input type="button" class="ChatPageShowButton && btn btn-primary" @click="ShowChatBar" value="Chat" ></templates>
     <transition name="custom-classes-transition"
                             enter-active-class="animated slideInUp"
                             leave-active-class="animated slideOutDown">
@@ -61,13 +90,20 @@
                                 <div class="input-group mb-3">
                                         <form method="POST" class="input-group-prepend" action="{% url 'sendchatmessage' %}" enctype="multipart/form-data">{% csrf_token %}
                                             <span class="input-group-text">
-                                                <input type="submit" value="send">
+                                                <button type="submit">
+                                                    <img src="/media/menuicon/sendmessage.png" width="32" height="26" alt="色玉"><br>
+                                                </button>
                                             </span>
-                                            <span class="input-group-text" >
+                                            <span class="input-group-text && container-fluid" >
                                                 <input  type="text" name="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
                                             </span>
                                             <span class="input-group-text">
-                                                <input type="file" name="image" value="P">
+                                                    <label>
+                                                        <span class="filelabel" title="ファイルを選択">
+                                                           <img class="img" src="/media/menuicon/sendimage.png" width="32" height="26" alt="">
+                                                        </span>
+                                                    <input type="file"  name="image" value="写真"　style="display:none">
+                                                    </label>
                                             </span>
                                         <input type="hidden" name="username" value="{{ user.username }}">
                                         <input type="hidden" name="nickname" value="{{ user.nickname }}">
@@ -111,7 +147,7 @@
 
 
             {% if item.icon %}
-               <a class="MyChat">  </a>   <a class="MyIcon">{{ item.nickname }}<br><img src='{{ item.icon }}' width="70" height="70"/></a></a>
+               <a class="MyChat"></a>   <templates class="NonMobilePage"><a class="MyIcon">{{ item.nickname }}<br><img  src='{{ item.icon }}' width="70" height="70"/></templates></a></a>
             {% endif %}           
         </div> 
     </div>
@@ -141,7 +177,7 @@
             {% endif %}
             <a class="btn btn-secondary" href="{% url 'comment' item.pk %}">Detail</a> 
             {% if item.icon %}
-               <a class="OtherChat">  </a>   <a class="OtherIcon">{{ item.nickname }}<br><img src='{{ item.icon }}' width="70" height="70"/></a></a>
+               <a class="OtherChat">  </a>   <a class="OtherIcon"><templates class="MobileChatname">{{ item.nickname }}</templates><br><img class="MobileImg" src='{{ item.icon }}' width="70" height="70"/></a></a>
             {% endif %}           
         </div> 
         
@@ -149,6 +185,7 @@
 
 {% endif %}    
     {% endfor %}
+    <div class="MobileHeight"></div>
 
 
 {% endblock %}

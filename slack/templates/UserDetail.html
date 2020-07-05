@@ -88,11 +88,16 @@
     {% endif %}   
     </div> 
     {% endfor %}
+
+    <div class="MobileHeight"></div>
+    
 </div>
 <!--SecretMessage model -->
 <form method="POST" class="input-group-prepend && ChatPage" action="{% url 'secredmessagecreate' user_de.pk user.pk %}" enctype="multipart/form-data">{% csrf_token %}
                                             <span class="input-group-text">
-                                                <input type="submit" value="send">
+                                                <button type="submit">
+                                                    <img src="/media/menuicon/sendmessage.png" width="32" height="26" alt="色玉"><br>
+                                                </button>
                                             </span>
                                             <span class="input-group-text" >
                                                 <input  type="text" name="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
