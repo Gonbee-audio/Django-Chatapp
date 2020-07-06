@@ -55,6 +55,9 @@
     .MoblieGood{
         display:none;
     }
+    .MoblieDetail{
+        display:none;
+    }
     @media screen and (max-width: 768px) {
     .MyChatBar {
         margin-right: 3%;
@@ -106,6 +109,9 @@
     .FixMobileimg{
         height:15%;
         width:80%;
+    }
+    .MoblieDetail{
+        display:block;
     }
 }
 </style>
@@ -201,16 +207,18 @@
                 <templates>
 
                 {% endif %}
-            {% endif %}
+            {% endif %}<a class="MyChat"></a>
 
-    <!-- Deteil button-->            
+    <!-- Deteil button-->  
+<templates class="NonMobilePage">          
         <a class="btn btn-secondary" href="{% url 'comment' item.pk %}">Detail</a> 
-
-
+</templates>
+        <a class="MoblieDetail" href="{% url 'comment' item.pk %}">Detail</a>    
 
             {% if item.icon %}
-               <a class="MyChat"></a>   <templates class="NonMobilePage"><a class="MyIcon">{{ item.nickname }}<br><img class="img" src='{{ item.icon }}' width="70" height="70"/></templates></a></a>
-            {% endif %}           
+                  <templates class="NonMobilePage"><a class="MyIcon">{{ item.nickname }}<br><img class="img" src='{{ item.icon }}' width="70" height="70"/></templates></a></a>
+            {% endif %} 
+     
         </div> 
     </div>
 
@@ -245,7 +253,7 @@
             </a>
 
 <!--Non Moblie Good Button-->
-            </a><br>
+            </a><br><a class="OtherChat">  </a>
         <templates class="NonMobilePage">
             <a href="{% url 'good' item.pk %}" class="btn btn-info btn" role="button" aria-pressed="true">
                 Good！{{ item.good }}
@@ -255,9 +263,14 @@
 <!-- its button too bigger to use mobilephone -->        
 
 <!-- detail -->
+<templates class="NonMobilePage"> 
             <a class="btn btn-secondary" href="{% url 'comment' item.pk %}">Detail</a> 
+</templates>
+            <a class="MoblieDetail" href="{% url 'comment' item.pk %}">Detail</a>
+            
+
             {% if item.icon %}
-               <a class="OtherChat">  </a>   <a class="OtherIcon"><templates class="MobileChatname">{{ item.nickname }}</templates><br><img class="MobileImg" src='{{ item.icon }}' width="70" height="70"/></a></a>
+                  <a class="OtherIcon"><templates class="MobileChatname">{{ item.nickname }}</templates><br><img class="MobileImg" src='{{ item.icon }}' width="70" height="70"/></a></a>
             {% endif %}           
         </div> 
         

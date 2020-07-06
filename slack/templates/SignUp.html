@@ -19,6 +19,11 @@
         text-align: justify;
         padding: 2% 1%;
     }
+    @media screen and (max-width: 768px) {
+        .TypoBox{
+ 
+        }
+    }
 </style>
 {% endblock %}
 
@@ -32,11 +37,11 @@
         <h3>{% if success %}{{ success }}<a href="../Login">Login Page</a>{% endif %}</h3>
         <div class="TypoBox">
             <a>name:</a><br>
-            <input type="text" name="username" placeholder="username">
+            <input type="text" class="form-control" name="username" placeholder="username">
         </div>
         <div class="TypoBox">
             <a>password:</a><br>
-            <input type="password" name="password" placeholder="password">
+            <input type="password" class="form-control" name="password" placeholder="password">
         </div>
         <div class="TypoBox">
             <input type="submit" class="btn btn-primary" value="Sign Up">
