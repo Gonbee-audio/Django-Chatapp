@@ -135,7 +135,7 @@ def SecredMessageCreate(request, pk, other_pk):
     if request.method == 'POST':
         users = get_object_or_404(User, pk=pk)
         yours = get_object_or_404(User, pk=other_pk)
-        userform = SecredSendForm(request.POST)
+        userform = SecredSendForm(request.POST, request.FILES)
         comment = userform.save(commit=False)
         comment.user = users
         userform.save()   

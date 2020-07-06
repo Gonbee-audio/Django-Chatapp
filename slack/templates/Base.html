@@ -192,11 +192,26 @@
                                 {% endif %}
                                 <p>Yourname:{{ user.username }}</p>
                                 <div class="list-group-item list-group-item-action " @click="OpenMenupage">Back</div>
-                                <a @click="OpenProfile"  class="list-group-item list-group-item-action " >Profile</a>
-                                <a @click="OpenLoginUser" class="list-group-item list-group-item-action">User</a>
-                                <a @click="OpenOptionPage" class="list-group-item list-group-item-action">Options</a>
-                                <a @click="OpenUpdate" class="list-group-item list-group-item-action">Updated Contents</a>
-                                <a href="{% url 'logout' %}" class="list-group-item list-group-item-action">Logout</a>
+                                <a @click="OpenProfile"  class="list-group-item list-group-item-action " >
+                                    <img class="FixImg" src="/media/mobileicon/profile.png" width="32" height="26" alt="">
+                                    Profile
+                                </a>
+                                <a @click="OpenLoginUser" class="list-group-item list-group-item-action">
+                                    <img class="FixImg" src="/media/mobileicon/user.png" width="32" height="26" alt="">
+                                    User
+                                </a>
+                                <a @click="OpenOptionPage" class="list-group-item list-group-item-action">
+                                    <img class="FixImg" src="/media/mobileicon/option.png" width="32" height="26" alt="">
+                                    Options
+                                </a>
+                                <a @click="OpenUpdate" class="list-group-item list-group-item-action">
+                                    <img class="FixImg" src="/media/mobileicon/update.png" width="32" height="26" alt="">
+                                    Updated Contents
+                                </a>
+                                <a href="{% url 'logout' %}" class="list-group-item list-group-item-action">
+                                    <img class="FixImg" src="/media/mobileicon/logout.png" width="32" height="26" alt="">
+                                    Logout
+                                </a>
                                 <a>{{ username }}</a>
                             </div>
                         </div>

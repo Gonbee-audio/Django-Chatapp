@@ -45,6 +45,10 @@
         Right:80%;
         border-color: transparent transparent aquamarine transparent;
     }
+    .FiledataDisplayNone{
+        display:none;
+    }
+
     @media screen and (max-width: 768px) {
                 .ChatPage {
                         top: 82%;
@@ -73,12 +77,15 @@
                         Right: 73%;
                       }
                 .MobileHeightDetail{
-                    height:15%;
+                    height:20%;
                 }
                 .MobileHeightComments{
                     height: 20%;
-
-    }
+                }
+                .FixMobileimg{
+                    height:15%;
+                    width:80%;
+                }
 }
 
 
@@ -89,36 +96,50 @@
 
 {% block content %}
 <div class="text-center">
-<!--user detail -->
+
+<!--you get user detail of pk-->
     <div><a href="{% url 'chat' %}">Back</a></div>
     <div><img src='{{user_de.image.url}}' width="200" height="200"/></div>
     <div>{{user_de.nickname}}</div>
     <h2>Individual message</h2>
 
+    <!--you message detail-->
 
-    <!--other-->
+    <!--yor message-->
     {% for users in users %}
-    {% for users in users.usersend.all %}<br>
-    {% if user.username == users.username or user.username == users.yourname %}
+    {% for users in users.usersend.all %}
+    {% if user.username == users.username  %}
+    <br>
     <div class="MyChatBar">
     
     <a class="MyChat"></a>
     {{users.text}}<br>
-    <a class="MyIcon">{{ users.nickname }}<br><img class="NonMobilePage" src='{{users.icon}}' width="70" height="70"/></a>
-    
-    {% elif not user.username == users.username or user.username == users.yourname %}
-    {% else %}
-
+    <a class="MyIcon">
+    <templates class="NonMobilePage">
+    {{ users.nickname }}<br>
+    </templates>
+    <img class="NonMobilePage" src='{{users.icon}}' width="70" height="70"/></a>
+        {% if users.image %}
+            <p class="text-center"><img class="FixImg FixMobileimg" src='{{users.image.url}}' width="200" height="200"/></p>
+        {% endif %}
+        
+    {% elif users.username == user_de.username %}
+    <br>
+    <!--other messsage-->
     <div class="OtherBar">
     
     <a class="OtherChat"></a>
     {{users.text}}<br>
     <a class="OtherIcon">
+        {% if users.image %}
+            <p class="text-center"><img class="FixImg FixMobileimg" src='{{users.image.url}}' width="200" height="200"/></p>
+        {% endif %}
     
     {{ users.nickname }}<br><img class="MobileImg" src='{{users.icon}}' width="70" height="70"/>
     
     </a>
-    
+    </div>
+        {% elif not user.username == users.username  %}
     {% endif %}
     </div> 
     {% endfor %}
@@ -136,6 +157,14 @@
                                             </span>
                                             <span class="input-group-text" >
                                                 <input  type="text" name="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+                                            </span>
+                                            <span class="input-group-text">
+                                                    <label>
+                                                        <span class="filelabel" title="">
+                                                           <img class="FixImg" src="/media/menuicon/sendimage.png" width="32" height="26" alt="">
+                                                        </span>
+                                                    <input type="file" class="FiledataDisplayNone" name="image" value="写真">
+                                                    </label>
                                             </span>
                                          <input type="hidden" name="yourname" value="{{ user_de.username }}">
                                          <input type="hidden" name="nickname" value="{{ user.nickname }}">

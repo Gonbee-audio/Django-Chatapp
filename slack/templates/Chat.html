@@ -77,7 +77,6 @@
     .OtherChat{
         Right: 73%;
     }
-
     .MoblieGood{
         display:block;
     }
@@ -86,11 +85,13 @@
         left: 62%;
         position:relative;
         display:block;
+        margin-right: 65%;
     }
     .OtherCreatedDate{
         top: 0%;
         left: 24%;
         position:relative;
+        margin-right: 70%;
         display:block;
     }
     .PCCreateedDate{
@@ -101,6 +102,10 @@
     }
     .MobileHeightChat{
         height:20%;
+    }
+    .FixMobileimg{
+        height:15%;
+        width:80%;
     }
 }
 </style>
@@ -160,9 +165,9 @@
 <!-- ChatMesssage of Username==Myname -->
    {% if item.username == user.username %}
 <!--date-->
-    <div class="MyCreatedDate">
+    <a class="MyCreatedDate">
             {{ item.created_date|date:"n/j H:i:s" }}
-    </div>
+    </a>
 <!--text-->
     <div class="MyChatBar">
         {% if not item.text == None %}
@@ -170,10 +175,11 @@
         {% endif %}
 
     
-<!--send image-->   
-        {% if item.image %}<p class="text-center"><img class="FixImg" src='{{item.image.url}}' width="200" height="200"/></p>{% endif %}
-
-            {% if user.is_authenticated %}
+<!-- send showing image-->   
+        {% if item.image %}
+            <p class="text-center"><img class="FixImg FixMobileimg" src='{{item.image.url}}' width="200" height="200"/></p>
+        {% endif %}
+        {% if user.is_authenticated %}
 
         
 <!-- its button too bigger to use mobilephone -->
@@ -224,7 +230,7 @@
     {% endif %}
 
 <!--sendimage-->
-        {% if item.image %}<p class="text-center"><img src='{{item.image.url}}' width="200" height="200"/></p>{% endif %}
+        {% if item.image %}<p class="text-center"><img class="FixImg FixMobileimg" src='{{item.image.url}}' width="200" height="200"/></p>{% endif %}
         <div>
 
 <!--Moblie Good Button-->
