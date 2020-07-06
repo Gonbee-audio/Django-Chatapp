@@ -8,21 +8,18 @@
     body{
         background-color: #f5f5f5;
     }
-    .img{
-         border-radius: 0%
-    }
     .MyChatBar{
         padding: 1% 5%;
-        margin: 2% 20%;
+        margin: 2% 20% 2% 40%;
         background-color: aquamarine;
         border-radius: 10%;
     }
     .MyChat{
         width: 0;
         height: 0;
+        position:absolute;
         border-style: solid;
         border-width: 20px 0 0 41px;
-        position:absolute;
         left:80%;
         border-color: transparent transparent transparent aquamarine;
             }
@@ -30,13 +27,16 @@
         left: 85%;
         position:absolute;
     }
+    .MyCreatedDate{
+        display:none;
+    }
     .OtherIcon{
         Right: 85%;
         position:absolute;
     }
     .OtherBar{
         padding: 1% 5%;
-        margin: 2% 20%;
+        margin: 2% 40% 2% 20%;
         background-color: aquamarine;
         border-radius: 10%;
     }
@@ -48,6 +48,12 @@
         position:absolute;
         Right:80%;
         border-color: transparent transparent aquamarine transparent;
+    }
+    .OtherCreatedDate{
+        display:none;
+    }
+    .MoblieGood{
+        display:none;
     }
     @media screen and (max-width: 768px) {
     .MyChatBar {
@@ -71,9 +77,30 @@
     .OtherChat{
         Right: 73%;
     }
-    .MobileHeight{
-        padding-bottom: 140px
 
+    .MoblieGood{
+        display:block;
+    }
+    .MyCreatedDate{
+        top: 0%;
+        left: 62%;
+        position:relative;
+        display:block;
+    }
+    .OtherCreatedDate{
+        top: 0%;
+        left: 24%;
+        position:relative;
+        display:block;
+    }
+    .PCCreateedDate{
+        display:none;
+    }
+    .OtherPCCreatedDate{
+        display:none;
+    }
+    .MobileHeightChat{
+        height:20%;
     }
 }
 </style>
@@ -81,100 +108,147 @@
 
 {% block content %}
 
+<!--NonMobile Page Html -->
 <templates id="app"> 
-    <templates class="NonMobilePage"><input type="button" class="ChatPageShowButton && btn btn-primary" @click="ShowChatBar" value="Chat" ></templates>
-    <transition name="custom-classes-transition"
+    <templates class="NonMobilePage">
+        <input type="button" class="ChatPageShowButton && btn btn-primary" @click="ShowChatBar" value="Chat" ></templates>
+        <transition name="custom-classes-transition"
                             enter-active-class="animated slideInUp"
                             leave-active-class="animated slideOutDown">
-                            <div key="message" v-if="Chat" class="ChatPage">
-                                <div class="input-group mb-3">
-                                        <form method="POST" class="input-group-prepend" action="{% url 'sendchatmessage' %}" enctype="multipart/form-data">{% csrf_token %}
+<!--ChatMessage Button -->
+        <div key="message" v-if="Chat" class="ChatPage">
+            <div class="input-group mb-3">
+<!--form-->
+                <form method="POST" class="input-group-prepend" action="{% url 'sendchatmessage' %}" enctype="multipart/form-data">{% csrf_token %}
+    <!--submit button-->
                                             <span class="input-group-text">
                                                 <button type="submit">
                                                     <img src="/media/menuicon/sendmessage.png" width="32" height="26" alt="色玉"><br>
                                                 </button>
                                             </span>
+    <!--submit text-->
                                             <span class="input-group-text && container-fluid" >
                                                 <input  type="text" name="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
                                             </span>
+    <!--submit image-->
                                             <span class="input-group-text">
                                                     <label>
                                                         <span class="filelabel" title="ファイルを選択">
-                                                           <img class="img" src="/media/menuicon/sendimage.png" width="32" height="26" alt="">
+                                                           <img class="FixImg" src="/media/menuicon/sendimage.png" width="32" height="26" alt="">
                                                         </span>
                                                     <input type="file"  name="image" value="写真"　style="display:none">
                                                     </label>
                                             </span>
+    <!-- Other Info-->
                                         <input type="hidden" name="username" value="{{ user.username }}">
                                         <input type="hidden" name="nickname" value="{{ user.nickname }}">
                                         <input type="hidden" name="icon" value="{{ user.image.url }}">
-                                        </form>
-                                </div>
-                            </div>
+<!-- endform -->
+                </form>
+            </div>
+        </div>
                             <div key="NoMessage" v-else></div>
-    </transition>
+        </transition>
 </templates>
 
 
 
 
+<!-- ChatMessage forloop-->
 {% for item in object %}
+
+<!-- ChatMesssage of Username==Myname -->
    {% if item.username == user.username %}
-   
-    <div class="MyChatBar">{{ item.text }}<br>
+<!--date-->
+    <div class="MyCreatedDate">
+            {{ item.created_date|date:"n/j H:i:s" }}
+    </div>
+<!--text-->
+    <div class="MyChatBar">
+        {% if not item.text == None %}
+        {{ item.text }}<br>
+        {% endif %}
 
     
-        <a>
-            {{ item.created_date|date:"n/j H:i:s" }}
-        </a>
-        {% if item.image %}<p class="text-center"><img src='{{item.image.url}}' width="200" height="200"/></p>{% endif %}
+<!--send image-->   
+        {% if item.image %}<p class="text-center"><img class="FixImg" src='{{item.image.url}}' width="200" height="200"/></p>{% endif %}
 
             {% if user.is_authenticated %}
+
+        
+<!-- its button too bigger to use mobilephone -->
                 {% if user.username == item.username %}
-                Good！{{ item.good }} <br>
+     <!-- good -->
+                Good！{{ item.good }} <a>
+                    <templates class="NonMobilePage">
+                        {{ item.created_date|date:"n/j H:i:s" }}
+                    </templates>
+                </a><br>
+   <!--Delete Button -->
                 <templates id="delete-animate">
                     <transition
                                name="custom-classes-transition"
                                enter-active-class="animated rubberBand"
                                leave-active-class="animated rubberBand">
-                        <a v-if="show" @click="ShowChange" href="{% url 'delete' item.pk %}" class="btn btn-danger" >Delete</a>
+                       <templates class="NonMobilePage"> <a v-if="show" @click="ShowChange" href="{% url 'delete' item.pk %}" class="btn btn-danger" >Delete</a></templates>
                     </transition>
                 <templates>
+
                 {% endif %}
             {% endif %}
+
+    <!-- Deteil button-->            
         <a class="btn btn-secondary" href="{% url 'comment' item.pk %}">Detail</a> 
 
 
 
             {% if item.icon %}
-               <a class="MyChat"></a>   <templates class="NonMobilePage"><a class="MyIcon">{{ item.nickname }}<br><img  src='{{ item.icon }}' width="70" height="70"/></templates></a></a>
+               <a class="MyChat"></a>   <templates class="NonMobilePage"><a class="MyIcon">{{ item.nickname }}<br><img class="img" src='{{ item.icon }}' width="70" height="70"/></templates></a></a>
             {% endif %}           
         </div> 
     </div>
 
         {% else %}
 
-    <div class="OtherBar">{{ item.text }} <br>
-        <a>
+<!-- ChatMesssage of Username==Yourname -->
+
+<!--date-->
+    <a class="OtherCreatedDate">
             {{ item.created_date|date:"n/j H:i:s" }}
-        </a>
+    </a>
+    <div class="OtherBar">
+
+<!--text-->
+    {% if not item.text == None %}
+        {{ item.text }}<br>
+    {% endif %}
+
+<!--sendimage-->
         {% if item.image %}<p class="text-center"><img src='{{item.image.url}}' width="200" height="200"/></p>{% endif %}
         <div>
-            <a href="{% url 'good' item.pk %}" class="btn btn-info btn" role="button" aria-pressed="true">
-                Good！{{ item.good }} 
+
+<!--Moblie Good Button-->
+        <a class="MoblieGood" href="{% url 'good' item.pk %}">
+            Good！{{ item.good }}
+        </a>
+        
+            <a>
+                <templates class="NonMobilePage">
+                {{ item.created_date|date:"n/j H:i:s" }}
+                </templates>
             </a>
-            {% if user.is_authenticated %}
-                {% if user.username == item.username %}
-                <templates id="delete-animate">
-                    <transition
-                               name="custom-classes-transition"
-                               enter-active-class="animated rubberBand"
-                               leave-active-class="animated rubberBand">
-                        <a v-if="show" @click="ShowChange" href="{% url 'delete' item.pk %}" class="btn btn-danger" >Delete</a>
-                    </transition>
-                <templates>
-                {% endif %}
-            {% endif %}
+
+<!--Non Moblie Good Button-->
+            </a><br>
+        <templates class="NonMobilePage">
+            <a href="{% url 'good' item.pk %}" class="btn btn-info btn" role="button" aria-pressed="true">
+                Good！{{ item.good }}
+            </a>
+        </templates>
+
+<!-- its button too bigger to use mobilephone -->        
+
+<!-- detail -->
             <a class="btn btn-secondary" href="{% url 'comment' item.pk %}">Detail</a> 
             {% if item.icon %}
                <a class="OtherChat">  </a>   <a class="OtherIcon"><templates class="MobileChatname">{{ item.nickname }}</templates><br><img class="MobileImg" src='{{ item.icon }}' width="70" height="70"/></a></a>
@@ -184,8 +258,8 @@
     </div>
 
 {% endif %}    
-    {% endfor %}
-    <div class="MobileHeight"></div>
+{% endfor %}
+    <div class="MobileHeightChat"></div>
 
 
 {% endblock %}
@@ -193,6 +267,8 @@
 {% block links %}
 
     <script> 
+
+
     new Vue({
         el: '#delete-animate',
         data: {
@@ -207,6 +283,7 @@
         },
         }
     }),
+
     new Vue({
         el: '#app',
         data: {

@@ -59,7 +59,7 @@
               position: fixed;
               z-index: 1; 
               top: 90%;
-              left: 0%;
+              left: 80%;
             }
             .MobileMenu{
                 display:none;
@@ -90,6 +90,9 @@
               left: 25%;
               height: 100%;
               width: 75%;
+            }
+            .FixImg{
+                border-radius:0%;
             }
             @media screen and (max-width: 768px) {
                 .ChatPage {
@@ -162,19 +165,19 @@
                     <div key="hidden" v-if="MenuPage">
                         <div class="MobileMenu">
                                 <a @click="OpenProfile">
-                                    <img class="img" src="/media/mobileicon/profile.png" width="32" height="26" alt="">
+                                    <img class="FixImg" src="/media/mobileicon/profile.png" width="32" height="26" alt="">
                                 </a>
                                 <a @click="OpenLoginUser">
-                                    <img class="img" src="/media/mobileicon/user.png" width="32" height="26" alt="">
+                                    <img class="FixImg" src="/media/mobileicon/user.png" width="32" height="26" alt="">
                                 </a>
                                 <a @click="OpenOptionPage">
-                                    <img class="img" src="/media/mobileicon/option.png" width="32" height="26" alt="">
+                                    <img class="FixImg" src="/media/mobileicon/option.png" width="32" height="26" alt="">
                                 </a>
                                 <a @click="OpenUpdate">
-                                    <img class="img" src="/media/mobileicon/update.png" width="32" height="26" alt="">
+                                    <img class="FixImg" src="/media/mobileicon/update.png" width="32" height="26" alt="">
                                 </a>
                                 <a href="{% url 'logout' %}">
-                                    <img class="img" src="/media/mobileicon/logout.png" width="32" height="26" alt="">
+                                    <img class="FixImg" src="/media/mobileicon/logout.png" width="32" height="26" alt="">
                                 </a>
                         </div>
                     </div>

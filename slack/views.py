@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models import Q
 from accounts.models import User
 from slack.models import ChatMessage, Comments, SecredMessage
 from slack.forms import PostChatMessage, CommentForm, UpdataForm, SecredSendForm
@@ -61,11 +62,10 @@ def ChatModel(request):
 
 def UserDetail(request, pk, other_pk):
     detail = get_object_or_404(User, pk=pk)
-    yourid = get_object_or_404(User, pk=other_pk)
-    name = yourid.username
-    logging.debug(detail)
-    players = SecredMessage.objects.filter(user=User.objects.get(username=name))
-    logging.debug(players)
+    yourid = User.objects.all().filter(
+        Q(pk=pk) | Q(pk=other_pk)
+    )
+    logging.debug(yourid)
 
     return render(request, 'UserDetail.html', {'user_de':detail, 'users':yourid})  
 

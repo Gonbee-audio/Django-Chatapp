@@ -7,14 +7,7 @@
     .ChatPage{
         left: 80%;
     }
-    @media screen and (max-width: 768px) {
-                .ChatPage {
-                        top: 92%;
-                        left: 0%;
-                        width: 100%;
-                      }
-    }
-    .MyChatBar{
+     .MyChatBar{
         padding: 1% 5%;
         margin: 2% 20%;
         background-color: aquamarine;
@@ -52,6 +45,44 @@
         Right:80%;
         border-color: transparent transparent aquamarine transparent;
     }
+    @media screen and (max-width: 768px) {
+                .ChatPage {
+                        top: 82%;
+                        left: 0%;
+                        width: 100%;
+                      }
+                .MyChatBar {
+                        margin-right: 3%;
+                        margin-left: 41%;
+                      }
+                .MyChat{
+                        left: 92%;
+
+                      }
+                .MobileImg{
+                        width: 40px;
+                        height: auto; 
+                      }
+                .MobileChatname{
+                        font-size:10%;
+                      }
+                .OtherBar{
+                        margin: 2% 18% 0% 23%;
+                      }
+                .OtherChat{
+                        Right: 73%;
+                      }
+                .MobileHeightDetail{
+                    height:15%;
+                }
+                .MobileHeightComments{
+                    height: 20%;
+
+    }
+}
+
+
+   
 </style>
 
 {% endblock %}
@@ -61,35 +92,39 @@
 <!--user detail -->
     <div><a href="{% url 'chat' %}">Back</a></div>
     <div><img src='{{user_de.image.url}}' width="200" height="200"/></div>
-    <div>{{user_de.username}}</div>
+    <div>{{user_de.nickname}}</div>
     <h2>Individual message</h2>
-
-<!-- SecretMessage model of Individual message -->
-    <!-- user -->
-    {% for users in user_de.usersend.all %}<br>
-    <div class="MyChatBar">
-    {% if users.username == user.username %}
-    <a class="MyChat"></a>
-    {{users.text}}<br>
-    <a class="MyIcon">{{ users.nickname }}<br><img src='{{users.icon}}' width="70" height="70"/></a>
-    {% endif %}
-    </div>
-    {% endfor %}
-    
 
 
     <!--other-->
+    {% for users in users %}
     {% for users in users.usersend.all %}<br>
+    {% if user.username == users.username or user.username == users.yourname %}
+    <div class="MyChatBar">
+    
+    <a class="MyChat"></a>
+    {{users.text}}<br>
+    <a class="MyIcon">{{ users.nickname }}<br><img class="NonMobilePage" src='{{users.icon}}' width="70" height="70"/></a>
+    
+    {% elif not user.username == users.username or user.username == users.yourname %}
+    {% else %}
+
     <div class="OtherBar">
-    {% if user_de.username == users.username %}
+    
     <a class="OtherChat"></a>
     {{users.text}}<br>
-    <a class="OtherIcon">{{ users.nickname }}<br><img src='{{users.icon}}' width="70" height="70"/></a>
-    {% endif %}   
+    <a class="OtherIcon">
+    
+    {{ users.nickname }}<br><img class="MobileImg" src='{{users.icon}}' width="70" height="70"/>
+    
+    </a>
+    
+    {% endif %}
     </div> 
     {% endfor %}
+    {% endfor %}
 
-    <div class="MobileHeight"></div>
+    <div class="MobileHeightDetail"></div>
     
 </div>
 <!--SecretMessage model -->
@@ -106,5 +141,5 @@
                                          <input type="hidden" name="nickname" value="{{ user.nickname }}">
                                          <input type="hidden" name="username" value="{{ user.username }}">
                                          <input type="hidden" name="icon" value="{{ user.image.url }}">
-                                        </form>
+</form>
 {% endblock %}
