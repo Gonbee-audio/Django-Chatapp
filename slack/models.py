@@ -8,7 +8,7 @@ from accounts.models import User
 class ChatMessage(models.Model):
     username = models.CharField(max_length=30)
     nickname = models.CharField(max_length=30, null=True)
-    text = models.CharField(max_length=1000, blank=True, null=True)
+    text = models.CharField(max_length=1000)
     image = models.ImageField(upload_to='images', blank=True, null=True)
     thumbnail = models.ImageField(upload_to='images',blank=True, null=True)
     icon =models.CharField(max_length=1000)
@@ -33,12 +33,14 @@ class SecredMessage(models.Model):
     username = models.CharField(max_length=30)
     yourname = models.CharField(max_length=30)
     nickname = models.CharField(max_length=30, null=True)
-    text = models.CharField(max_length=1000, blank=True, null=True)
+    text = models.CharField(max_length=1000)
     image = models.ImageField(upload_to='images',blank=True, null=True)
     icon =models.CharField(max_length=1000)
     created_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.nickname
+        return self.username
+
+
 
 

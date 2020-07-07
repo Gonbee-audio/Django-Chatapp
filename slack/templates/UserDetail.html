@@ -9,7 +9,7 @@
     }
      .MyChatBar{
         padding: 1% 5%;
-        margin: 2% 20%;
+        margin: 2% 19% 0% 50%;
         background-color: aquamarine;
         border-radius: 10%;
     }
@@ -32,7 +32,7 @@
     }
     .OtherBar{
         padding: 1% 5%;
-        margin: 2% 20%;
+        margin: 2%  50% 0% 19%;
         background-color: aquamarine;
         border-radius: 10%;
     }
@@ -98,57 +98,83 @@
 <div class="text-center">
 
 <!--you get user detail of pk-->
-    <div><a href="{% url 'chat' %}">Back</a></div>
-    <div><img src='{{user_de.image.url}}' width="200" height="200"/></div>
+    <div>
+        <a href="{% url 'chat' %}">Back</a>
+    </div>
+    
+    <div>
+        <img src='{{user_de.image.url}}' width="200" height="200"/>
+    </div>
+    
     <div>{{user_de.nickname}}</div>
+
+    
     <h2>Individual message</h2>
 
-    <!--you message detail-->
+<!--message detail-->
+<!-- this page exist bug offten the page Specifically, The page order is out of order -->
 
-    <!--yor message-->
+   
     {% for users in users %}
-    {% for users in users.usersend.all %}
-    {% if user.username == users.username  %}
+    {% for users in users.usersend.all|dictsort:"created_date" %}
+<!--your message-->
+
+<!-- your name-->
+    {% if user.username == users.username %}
     <br>
     <div class="MyChatBar">
-    
+    {{users.created_date}}<br>
+<!--fukidasi icon -->
     <a class="MyChat"></a>
+<!-- send text show-->
     {{users.text}}<br>
+
+<!-- send icon-->
     <a class="MyIcon">
     <templates class="NonMobilePage">
     {{ users.nickname }}<br>
     </templates>
     <img class="NonMobilePage" src='{{users.icon}}' width="70" height="70"/></a>
         {% if users.image %}
-            <p class="text-center"><img class="FixImg FixMobileimg" src='{{users.image.url}}' width="200" height="200"/></p>
+            <p><img class="FixImg FixMobileimg" src='{{users.image.url}}' width="200" height="200"/></p>
         {% endif %}
-        
+    </div>
+
+<!--the other messsage-->
     {% elif users.username == user_de.username %}
     <br>
-    <!--other messsage-->
+    
     <div class="OtherBar">
+    {{users.created_date}}<br>
     
     <a class="OtherChat"></a>
     {{users.text}}<br>
-    <a class="OtherIcon">
-        {% if users.image %}
+            {% if users.image %}
             <p class="text-center"><img class="FixImg FixMobileimg" src='{{users.image.url}}' width="200" height="200"/></p>
-        {% endif %}
+            {% endif %}
+    <a class="OtherIcon">
+
+<!-- other nickname-->    
+    {{ users.nickname }}<br>
     
-    {{ users.nickname }}<br><img class="MobileImg" src='{{users.icon}}' width="70" height="70"/>
+<!--other -->    
+
+    <img class="MobileImg" src='{{users.icon}}' width="70" height="70"/>
     
     </a>
     </div>
+<!--Other User -->
         {% elif not user.username == users.username  %}
     {% endif %}
     </div> 
+
     {% endfor %}
     {% endfor %}
 
     <div class="MobileHeightDetail"></div>
     
 </div>
-<!--SecretMessage model -->
+<!--SecretMessage model form -->
 <form method="POST" class="input-group-prepend && ChatPage" action="{% url 'secredmessagecreate' user_de.pk user.pk %}" enctype="multipart/form-data">{% csrf_token %}
                                             <span class="input-group-text">
                                                 <button type="submit">

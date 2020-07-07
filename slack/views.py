@@ -27,6 +27,7 @@ def SingUpAccount(request):
             return render(request, 'SignUp.html', {'error':'This username is already in use'})
         except:
             User.objects.create(username=username1, nickname=username2, password=password1)
+            # return render(request, 'Login.html', {'success':'Successfully created account'})
             return redirect('chat')
     return render(request, 'SignUp.html', {})
 
@@ -45,15 +46,14 @@ def Login(request):
 
 @login_required
 def SendChatMessage(request):
-    form = PostChatMessage()
     if request.method == 'POST':
        form = PostChatMessage(request.POST, request.FILES)
        if form.is_valid():
            form.save()
            return redirect('chat')
     else:
-           return render(request, 'ChatSend.html', {'error': 'Please type message'})
-    return render(request, 'ChatSend.html', {'form':form})
+           return render(request, 'Chat.html', {'error': 'Please type message'})
+    return redirect('chat')
 
 @login_required
 def ChatModel(request):
@@ -65,8 +65,6 @@ def UserDetail(request, pk, other_pk):
     yourid = User.objects.all().filter(
         Q(pk=pk) | Q(pk=other_pk)
     )
-    logging.debug(yourid)
-
     return render(request, 'UserDetail.html', {'user_de':detail, 'users':yourid})  
 
 def Logout(request):
@@ -122,7 +120,7 @@ def CommentsSend(request, object_pk):
 def ChatComment(request, object_pk):
     post = get_object_or_404(ChatMessage, pk=object_pk)
     if request.method == 'POST':
-        userform = CommentForm(request.POST)
+        userform = CommentForm(request.POST, request.FILES)
         comment = userform.save(commit=False)
         comment.chatmessage = post
         userform.save()   
@@ -136,9 +134,10 @@ def SecredMessageCreate(request, pk, other_pk):
         users = get_object_or_404(User, pk=pk)
         yours = get_object_or_404(User, pk=other_pk)
         userform = SecredSendForm(request.POST, request.FILES)
-        comment = userform.save(commit=False)
-        comment.user = users
-        userform.save()   
+        if userform.is_valid():
+            comment = userform.save(commit=False)
+            comment.user = users
+            userform.save()   
         return redirect('userdetail',pk=pk, other_pk=other_pk)
     else:
        return redirect('userdetail')

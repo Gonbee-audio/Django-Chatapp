@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" type="text/css" href="{% static 'SlackCss/Chat.css' %}">
+<!--<link rel="stylesheet" type="text/css" href="{% static 'SlackCss/Chat.css' %}">-->
 <style>
     body{
         background-color: #f5f5f5;
@@ -147,7 +147,7 @@
                                                         <span class="filelabel" title="ファイルを選択">
                                                            <img class="FixImg" src="/media/menuicon/sendimage.png" width="32" height="26" alt="">
                                                         </span>
-                                                    <input type="file"  name="image" value="写真"　style="display:none">
+                                                    <input type="file" name="image" value="写真"　style="display:none">
                                                     </label>
                                             </span>
     <!-- Other Info-->
@@ -197,14 +197,15 @@
                     </templates>
                 </a><br>
    <!--Delete Button -->
+   <!--MobilePhon dont show this button-->
                 <templates id="delete-animate">
                     <transition
                                name="custom-classes-transition"
                                enter-active-class="animated rubberBand"
                                leave-active-class="animated rubberBand">
-                       <templates class="NonMobilePage"> <a v-if="show" @click="ShowChange" href="{% url 'delete' item.pk %}" class="btn btn-danger" >Delete</a></templates>
+                           <a v-if="show" @click="ShowChange" href="{% url 'delete' item.pk %}" class="btn btn-danger && NonMobilePage" >Delete</a>
                     </transition>
-                <templates>
+                </templates>
 
                 {% endif %}
             {% endif %}<a class="MyChat"></a>

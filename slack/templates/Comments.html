@@ -69,7 +69,7 @@
     </transition>
 </templates>
 
-<!-- detail chatsend model-->
+<!-- you click detail  of chatsend model-->
     <div class="ChatBar">
         <div>Name:{{ detail.nickname }}</div>
         <div>Comments:{{ detail.text }}</div>
@@ -80,7 +80,7 @@
 
 
 <!--Comments-->
-<h2>Comments</h2>
+<h4>Comments</h4>
 {% for comment in detail.items.all %}
     <div class="comment">
         <strong>Name:{{ comment.nickrname }}</strong>

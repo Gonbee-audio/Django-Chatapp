@@ -1,11 +1,15 @@
 from django import forms
 from .models import ChatMessage, Comments, SecredMessage
 from accounts.models import User
+from django.core.exceptions import ValidationError
+import logging
+
 
 class PostChatMessage(forms.ModelForm):
     class Meta:
         model = ChatMessage
         fields = ('username','nickname', 'text','image', 'icon')
+
 
 class CommentForm(forms.ModelForm):
 

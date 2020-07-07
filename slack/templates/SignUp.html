@@ -30,22 +30,33 @@
 {% block content %}
 <body class="text-center">
     <div >
+
+<!--Sign in form -->
         <form method="POST" action="" >{% csrf_token %}
         <div class="SignUpMenu">
+<!-- error -->
         {% if error %}{{ error }}{% endif %}
+
         <a href="../">Login Page</a>
+
+<!-- success page-->
         <h3>{% if success %}{{ success }}<a href="../Login">Login Page</a>{% endif %}</h3>
-        <div class="TypoBox">
-            <a>name:</a><br>
-            <input type="text" class="form-control" name="username" placeholder="username">
-        </div>
-        <div class="TypoBox">
-            <a>password:</a><br>
-            <input type="password" class="form-control" name="password" placeholder="password">
-        </div>
-        <div class="TypoBox">
-            <input type="submit" class="btn btn-primary" value="Sign Up">
-        </div>
+
+
+            <div class="TypoBox">
+                <a>name:</a><br>
+                <input type="text" class="form-control" name="username" placeholder="username">
+            </div>
+
+            <div class="TypoBox">
+                <a>password:</a><br>
+                <input type="password" class="form-control" name="password" placeholder="password">
+            </div>
+
+            <div class="TypoBox">
+                <input type="submit" class="btn btn-primary" value="Sign Up">
+            </div>
+
         </div>
         </form>
     </div>
