@@ -156,7 +156,7 @@
 
 <!-- other nickname-->    
     {{ users.nickname }}<br>
-    
+
 <!--other -->    
 
     <img class="MobileImg" src='{{users.icon}}' width="70" height="70"/>
@@ -175,26 +175,37 @@
     
 </div>
 <!--SecretMessage model form -->
+
+
 <form method="POST" class="input-group-prepend && ChatPage" action="{% url 'secredmessagecreate' user_de.pk user.pk %}" enctype="multipart/form-data">{% csrf_token %}
-                                            <span class="input-group-text">
-                                                <button type="submit">
-                                                    <img src="/media/menuicon/sendmessage.png" width="32" height="26" alt="色玉"><br>
-                                                </button>
-                                            </span>
-                                            <span class="input-group-text" >
-                                                <input  type="text" name="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
-                                            </span>
-                                            <span class="input-group-text">
-                                                    <label>
-                                                        <span class="filelabel" title="">
-                                                           <img class="FixImg" src="/media/menuicon/sendimage.png" width="32" height="26" alt="">
-                                                        </span>
-                                                    <input type="file" class="FiledataDisplayNone" name="image" value="写真">
-                                                    </label>
-                                            </span>
-                                         <input type="hidden" name="yourname" value="{{ user_de.username }}">
-                                         <input type="hidden" name="nickname" value="{{ user.nickname }}">
-                                         <input type="hidden" name="username" value="{{ user.username }}">
-                                         <input type="hidden" name="icon" value="{{ user.image.url }}">
+
+
+        <span class="input-group-text">
+            <button type="submit">
+                <img src="/media/menuicon/sendmessage.png" width="32" height="26" alt="色玉"><br>
+            </button>
+        </span>
+
+
+        <span class="input-group-text" >
+                <input  type="text" name="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+        </span>
+
+
+        <span class="input-group-text">
+                <label>
+                    <span class="filelabel" title="">
+                        <img class="FixImg" src="/media/menuicon/sendimage.png" width="32" height="26" alt="">
+                    </span>
+                    <input type="file" class="FiledataDisplayNone" name="image" value="写真">
+                </label>
+        </span>
+
+
+        <input type="hidden" name="yourname" value="{{ user_de.username }}">
+        <input type="hidden" name="nickname" value="{{ user.nickname }}">
+        <input type="hidden" name="username" value="{{ user.username }}">
+        <input type="hidden" name="icon" value="{{ user.image.url }}">
+
 </form>
 {% endblock %}
